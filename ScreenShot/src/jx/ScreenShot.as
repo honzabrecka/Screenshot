@@ -29,7 +29,7 @@ package jx
 	public class ScreenShot
 	{
 		
-		public static var screenLoader:ScreenShotLoader;
+		public static var dictionary:LoadQueue;
 		
 		/**
 		 * Are we in testing or upload mode.
@@ -62,7 +62,7 @@ package jx
 				return true;
 			}
 			
-			var originalScreen:BitmapData = screenLoader.getScreen(name);
+			var originalScreen:BitmapData = dictionary.getScreen(name);
 			
 			if (!originalScreen) return false;
 			

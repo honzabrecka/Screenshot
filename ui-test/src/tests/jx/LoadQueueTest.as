@@ -13,7 +13,7 @@ package tests.jx
 	
 	import flexunit.framework.Assert;
 	
-	import jx.ScreenShotLoader;
+	import jx.LoadQueue;
 	
 	import org.flexunit.async.Async;
 	import tests.TestCase;
@@ -23,20 +23,20 @@ package tests.jx
 	 * @langversion 3.0
 	 */
 	
-	public class ScreenShotLoaderTest extends TestCase
+	public class LoadQueueTest extends TestCase
 	{
 		
-		public function ScreenShotLoaderTest()
+		public function LoadQueueTest()
 		{
 			super();
 		}
 		
-		private var loader:ScreenShotLoader;
+		private var loader:LoadQueue;
 		
 		[Before]
 		public function setUp():void
 		{
-			loader = new ScreenShotLoader("../data/");
+			loader = new LoadQueue("../data/");
 		}
 		
 		[After]

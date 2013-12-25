@@ -2,7 +2,7 @@
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
     <classEntry path="jx.ScreenShot"/>
-    <classEntry path="jx.ScreenShotLoader"/>
+    <classEntry path="jx.LoadQueue"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

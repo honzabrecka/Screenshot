@@ -23,7 +23,7 @@ package jx
 	 * @langversion 3.0
 	 */
 	
-	public class ScreenShotLoader extends EventDispatcher
+	public class LoadQueue extends EventDispatcher
 	{
 		
 		private var path:String;
@@ -35,7 +35,7 @@ package jx
 		private var loader:Loader;
 		private var index:uint;
 		
-		public function ScreenShotLoader(path:String)
+		public function LoadQueue(path:String)
 		{
 			this.path = path;
 		}

@@ -7,29 +7,29 @@
 		<![CDATA[
 			import mx.events.FlexEvent;
 			
-			import jx.ScreenShotLoader;
+			import jx.LoadQueue;
 			import jx.ScreenShot;
 			
 			import org.flexunit.runner.FlexUnitCore;
 			
-			import tests.jx.ScreenShotLoaderTest;
+			import tests.jx.LoadQueueTest;
 			import tests.jx.SquareTest;
 			import tests.jx.ScreenShotTest;
 			
 			private function creationCompleteHandler(event:FlexEvent):void
 			{
-				ScreenShot.screenLoader = new ScreenShotLoader("../data/");
+				ScreenShot.dictionary = new LoadQueue("../data/");
 				ScreenShot.uploadUrl = "http://localhost/upload/ui-test.php";
 				ScreenShot.uploadMode = false;
-				ScreenShot.screenLoader.addEventListener(Event.COMPLETE, screenLoader_completeHandler);
-				ScreenShot.screenLoader.load(new <String>["SquareTest.defaultColor", "SquareTest.changedColor"]);
+				ScreenShot.dictionary.addEventListener(Event.COMPLETE, screenLoader_completeHandler);
+				ScreenShot.dictionary.load(new <String>["SquareTest.defaultColor", "SquareTest.changedColor"]);
 			}
 			
 			private function screenLoader_completeHandler(event:Event):void
 			{
 				var core:FlexUnitCore = new FlexUnitCore();
 					core.addListener(runner);
-					core.run(ScreenShotTest, ScreenShotLoaderTest, SquareTest);
+					core.run(ScreenShotTest, LoadQueueTest, SquareTest);
 			}
 			
 		]]>
