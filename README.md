@@ -1,7 +1,7 @@
 ScreenShot
 ==========
 
-ScreenShot is the ActionScript 3 util for integration testing of pure ActionScript ui components. It perfectly works with FlexUnit testing flow. Currently it doesn't support Flex Framework components.
+ScreenShot is the ActionScript 3 util for integration testing of ui components writen in pure ActionScript. It perfectly works with FlexUnit testing flow. Currently it doesn't support Flex Framework components.
 
 ## Use
 
