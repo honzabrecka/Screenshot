@@ -1,0 +1,27 @@
+# Project build and release directories
+target/
+bin/
+bin-debug/
+bin-release/
+asdoc-output/
+
+# Eclipse/Flex/Flash Builder project files
+.settings/
+.classpath
+.metadata/
+
+# Mac OS
+*.DS_Store
+
+workerswfs/
+
+!src/tests/
+
+
+# Glogster
+DEPLOY/
+TESTS/*
+DEBUG/
+
+# spritesheet
+*assetsSpritesheet.*

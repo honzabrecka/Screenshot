@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" xmlns:ns="http://www.adobe.com/2009/flexUnitUIRunner"
+			   creationComplete="creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import jx.ScreenShotLoader;
+			import jx.ScreenShot;
+			
+			import org.flexunit.runner.FlexUnitCore;
+			
+			import tests.jx.ScreenShotLoaderTest;
+			import tests.jx.SquareTest;
+			import tests.jx.ScreenShotTest;
+			
+			private function creationCompleteHandler(event:FlexEvent):void
+			{
+				ScreenShot.screenLoader = new ScreenShotLoader("../data/");
+				ScreenShot.uploadUrl = "http://localhost/upload/ui-test.php";
+				ScreenShot.uploadMode = false;
+				ScreenShot.screenLoader.addEventListener(Event.COMPLETE, screenLoader_completeHandler);
+				ScreenShot.screenLoader.load(new <String>["SquareTest.defaultColor", "SquareTest.changedColor"]);
+			}
+			
+			private function screenLoader_completeHandler(event:Event):void
+			{
+				var core:FlexUnitCore = new FlexUnitCore();
+					core.addListener(runner);
+					core.run(ScreenShotTest, ScreenShotLoaderTest, SquareTest);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<ns:TestRunnerBase id="runner" width="100%" height="100%" />
+</s:Application>
