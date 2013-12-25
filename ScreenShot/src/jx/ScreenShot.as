@@ -30,6 +30,11 @@ package jx
 	{
 		
 		public static var screenLoader:ScreenShotLoader;
+		
+		/**
+		 * Are we in testing or upload mode.
+		 */
+		
 		public static var uploadMode:Boolean = false;
 		public static var uploadUrl:String = "";
 		
@@ -37,6 +42,14 @@ package jx
 		{
 			throw new IllegalOperationError("Can't be instantiated.");
 		}
+		
+		/**
+		 * Compare screen shot with component.
+		 * 
+		 * <p>Before use this method you have to set <code>screenLoader</code> property.</p>
+		 * 
+		 * @return Return true when the component looks exactly the same as is on screen shot.
+		 */
 		
 		public static function compare(name:String, component:DisplayObject):Boolean
 		{
@@ -55,6 +68,11 @@ package jx
 			
 			return compareBitmapData(originalScreen, screen);
 		}
+		
+		/**
+		 * Compare two bitmap data, pixel by pixel.
+		 * @return Return true when bitmap data are exactly the same.
+		 */
 		
 		public static function compareBitmapData(original:BitmapData, test:BitmapData):Boolean
 		{
