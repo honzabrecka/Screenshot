@@ -13,20 +13,24 @@
 			import org.flexunit.runner.FlexUnitCore;
 			
 			import tests.jx.LoadQueueTest;
-			import tests.jx.SquareTest;
 			import tests.jx.ScreenShotTest;
+			import tests.jx.SquareTest;
+			
+			private var queue:LoadQueue;
 			
 			private function creationCompleteHandler(event:FlexEvent):void
 			{
-				ScreenShot.dictionary = new LoadQueue("../data/");
-				ScreenShot.uploadUrl = "http://localhost/upload/ui-test.php";
-				ScreenShot.uploadMode = false;
-				ScreenShot.dictionary.addEventListener(Event.COMPLETE, screenLoader_completeHandler);
-				ScreenShot.dictionary.load(new <String>["SquareTest.defaultColor", "SquareTest.changedColor"]);
+				queue = new LoadQueue("../data/");
+				queue.addEventListener(Event.COMPLETE, screenLoader_completeHandler);
+				queue.load(new <String>["SquareTest.defaultColor", "SquareTest.changedColor"]);
 			}
 			
 			private function screenLoader_completeHandler(event:Event):void
 			{
+				ScreenShot.uploadUrl = "http://localhost/upload/ui-test.php";
+				ScreenShot.uploadMode = false;
+				ScreenShot.dictionary = queue.dictionary;
+				
 				var core:FlexUnitCore = new FlexUnitCore();
 					core.addListener(runner);
 					core.run(ScreenShotTest, LoadQueueTest, SquareTest);

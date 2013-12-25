@@ -18,6 +18,7 @@ package jx
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
 	import flash.utils.ByteArray;
+	import flash.utils.Dictionary;
 	
 	import mx.graphics.codec.PNGEncoder;
 
@@ -29,7 +30,7 @@ package jx
 	public class ScreenShot
 	{
 		
-		public static var dictionary:LoadQueue;
+		public static var dictionary:Dictionary;
 		
 		/**
 		 * Are we in testing or upload mode.
@@ -62,7 +63,7 @@ package jx
 				return true;
 			}
 			
-			var originalScreen:BitmapData = dictionary.getScreen(name);
+			var originalScreen:BitmapData = dictionary[name];
 			
 			if (!originalScreen) return false;
 			

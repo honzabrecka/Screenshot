@@ -62,7 +62,7 @@ package tests.jx
 		[Test(expects="flash.errors.IllegalOperationError")]
 		public function getFromNonready():void
 		{
-			loader.getScreen("nonready");
+			loader.dictionary;
 		}
 		
 		[Test(async)]
@@ -76,8 +76,8 @@ package tests.jx
 		
 		private function completeEvent_asyncHandler(event:Event, data:Object):void
 		{
-			Assert.assertTrue(loader.getScreen("a") is BitmapData);
-			Assert.assertNull(loader.getScreen("undefinedScreen"));
+			Assert.assertTrue(loader.dictionary["a"] is BitmapData);
+			Assert.assertNull(loader.dictionary["undefinedScreen"]);
 		}
 		
 	}

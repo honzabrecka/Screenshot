@@ -28,7 +28,7 @@ package jx
 		
 		private var path:String;
 		private var queue:Vector.<String>;
-		private var screens:Dictionary;
+		private var _dictionary:Dictionary;
 		private var processing:Boolean = false;
 		private var loaded:uint;
 		private var failed:uint;
@@ -40,10 +40,10 @@ package jx
 			this.path = path;
 		}
 		
-		public function getScreen(name:String):BitmapData
+		public function get dictionary():Dictionary
 		{
-			if (!screens) throw new IllegalOperationError("You have to load screens before any action.");
-			return screens[name] as BitmapData;
+			if (!_dictionary) throw new IllegalOperationError("You have to call load method before.");
+			return _dictionary;
 		}
 		
 		public function load(queue:Vector.<String>):void
@@ -52,7 +52,7 @@ package jx
 			if (!queue) throw new ArgumentError("Queue can't be empty.");
 			this.queue = queue;
 			
-			screens = new Dictionary();
+			_dictionary = new Dictionary();
 			loaded = 0;
 			failed = 0;
 			index = 0;
@@ -87,7 +87,7 @@ package jx
 		
 		private function pushBitmap(name:String, image:BitmapData):void
 		{
-			screens[name] = image;
+			_dictionary[name] = image;
 		}
 		
 		private function destroyLoader():void
