@@ -5,22 +5,28 @@ ScreenShot is the ActionScript 3 util for integration testing of ui components w
 
 ## Use
 
-First of all you have to prepare `ScreenShot` and `ScreenShotLoader`. Following code should be part of a Main.as file:
+First of all you have to prepare `ScreenShot` and `LoadQueue`. Following code should be part of a Main.as file:
+
+	var queue:LoadQueue;
+
+	...
 
 	// create new instance of ScreenShotLoader with path, where screens are stored
-	ScreenShot.screenLoader = new ScreenShotLoader("../data/");
-	// set upload url, where the new screen are uploaded
-	ScreenShot.uploadUrl = "http://localhost/ui-test.php";
-	// indicates if we are creating (true) or testing (false)
-	ScreenShot.uploadMode = false;
-	ScreenShot.screenLoader.addEventListener(Event.COMPLETE, screenLoader_completeHandler);
+	queue = new LoadQueue("../data/");
+	queue.addEventListener(Event.COMPLETE, screenLoader_completeHandler);
 	// list of screens
-	ScreenShot.screenLoader.load(new <String>["SquareTest.defaultColor", "SquareTest.changedColor"]);
+	queue.load(new <String>["SquareTest.defaultColor", "SquareTest.changedColor"]);
 
 	...
 
 	private function screenLoader_completeHandler(event:Event):void
 	{
+		ScreenShot.dictionary = queue.dictionary;
+		// set upload url, where the new screen are uploaded
+		ScreenShot.uploadUrl = "http://localhost/ui-test.php";
+		// indicates if we are creating (true) or testing (false)
+		ScreenShot.uploadMode = false;
+
 		// here we start execute FlexUnit tests...
 	}
 
@@ -37,7 +43,7 @@ Use in test case can look as follows:
 		Assert.assertTrue(ScreenShot.compare("SquareTest.defaultColor", component));
 	}
 
-When we run this test with `ScreenShot.uploadMode = true`, then generated screen shots are sent to `ScreenShot.uploadUrl` as png file stream. Php handles uploads, we check them and the good ones we copy to our "data" (`new ScreenShotLoader("../data/");`) direcotory. Then we can run with `ScreenShot.uploadMode = false` and see the results - each test should pass until we made some changes in our ui components...
+When we run this test with `ScreenShot.uploadMode = true`, then generated screen shots are sent to `ScreenShot.uploadUrl` as png file stream. Php handles uploads, we check them and the good ones we copy to our "data" (`new LoadQueue("../data/");`) direcotory. Then we can run with `ScreenShot.uploadMode = false` and see the results - each test should pass until we made some changes in our ui components...
 
 ## Example use
 
