@@ -9,14 +9,17 @@
 package tests.jx
 {
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.utils.Dictionary;
 	
 	import flexunit.framework.Assert;
 	
+	import jx.ScreenShot;
 	import jx.Square;
 	import jx.UIComponentEvent;
-	import jx.ScreenShot;
 	
 	import org.flexunit.async.Async;
+	
 	import tests.TestCase;
 	
 	/**
@@ -36,50 +39,74 @@ package tests.jx
 		[Embed(source="../../../data/c.png")]
 		private static const C:Class;
 		
+		[Embed(source="../../../data/SquareTest.defaultColor.png")]
+		private static const SquareScreen:Class;
+		
 		public function ScreenShotTest()
 		{
 			super();
 		}
 		
-		private var a:Bitmap;
-		private var b:Bitmap;
-		private var c:Bitmap;
+		private var a:BitmapData;
+		private var b:BitmapData;
+		private var c:BitmapData;
 		private var square:Square;
+		
+		private static var tempScreenShotDictionary:Dictionary;
+		
+		[BeforeClass]
+		public static function setUpClass():void
+		{
+			tempScreenShotDictionary = ScreenShot.dictionary;
+		}
+		
+		[AfterClass]
+		public static function tearDownClass():void
+		{
+			ScreenShot.dictionary = tempScreenShotDictionary;
+		}
 		
 		[Before]
 		public function setUp():void
 		{
-			a = new A();
-			b = new B();
-			c = new C();
+			a = Bitmap(new A()).bitmapData;
+			b = Bitmap(new B()).bitmapData;
+			c = Bitmap(new C()).bitmapData;
 			square = new Square();
+			
+			ScreenShot.dictionary = new Dictionary();
+			ScreenShot.dictionary["SquareTest.defaultColor"] = Bitmap(new SquareScreen()).bitmapData;
 		}
 		
 		[After]
 		public function tearDown():void
 		{
+			a.dispose();
 			a = null;
+			b.dispose();
 			b = null;
+			c.dispose();
 			c = null;
 			square = null;
+			ScreenShot.dictionary = null;
 		}
 		
 		[Test]
 		public function compareSameBitmapData():void
 		{
-			Assert.assertTrue(ScreenShot.compareBitmapData(a.bitmapData.clone(), a.bitmapData.clone()));
+			Assert.assertTrue(ScreenShot.compareBitmapData(a.clone(), a.clone()));
 		}
 		
 		[Test]
 		public function compareBitmapDataWithDifferentSize():void
 		{
-			Assert.assertFalse(ScreenShot.compareBitmapData(b.bitmapData.clone(), c.bitmapData.clone()));
+			Assert.assertFalse(ScreenShot.compareBitmapData(b.clone(), c.clone()));
 		}
 		
 		[Test]
 		public function compareBitmapDataWithDifferentColor():void
 		{
-			Assert.assertFalse(ScreenShot.compareBitmapData(a.bitmapData.clone(), b.bitmapData.clone()));
+			Assert.assertFalse(ScreenShot.compareBitmapData(a.clone(), b.clone()));
 		}
 		
 		[Test(async)]
