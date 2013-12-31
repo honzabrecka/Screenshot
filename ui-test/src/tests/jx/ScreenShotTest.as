@@ -109,6 +109,15 @@ package tests.jx
 			Assert.assertFalse(ScreenShot.compareBitmapData(a.clone(), b.clone()));
 		}
 		
+		[Test(async, expects="flash.errors.IllegalOperationError")]
+		public function missingDictionary():void
+		{
+			ScreenShot.dictionary = null;
+			Async.proceedOnEvent(this, square, UIComponentEvent.CREATION_COMPLETE);
+			containerForUIComponent.addChild(square);
+			ScreenShot.compare("whatever, because dictionary is null...", square);
+		}
+		
 		[Test(async)]
 		public function compareGood():void
 		{

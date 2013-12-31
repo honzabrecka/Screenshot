@@ -63,6 +63,8 @@ package jx
 				return true;
 			}
 			
+			if (!dictionary) throw new IllegalOperationError("You have to set the dictionary first.");
+			
 			var originalScreen:BitmapData = dictionary[name];
 			
 			if (!originalScreen) return false;
