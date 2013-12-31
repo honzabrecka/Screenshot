@@ -11,16 +11,7 @@ package jx
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.errors.IllegalOperationError;
-	import flash.events.Event;
-	import flash.events.IOErrorEvent;
-	import flash.events.SecurityErrorEvent;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
-	import flash.net.URLRequestHeader;
-	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
-	
-	import mx.graphics.codec.PNGEncoder;
 
 	/**
 	 * @author Jan Břečka
@@ -31,13 +22,7 @@ package jx
 	{
 		
 		public static var dictionary:Dictionary;
-		
-		/**
-		 * Are we in testing or upload mode.
-		 */
-		
-		public static var uploadMode:Boolean = false;
-		public static var uploadUrl:String = "";
+		public static var uploader:Uploader;
 		
 		public function ScreenShot()
 		{
@@ -57,9 +42,9 @@ package jx
 			var screen:BitmapData = new BitmapData(component.width, component.height);
 				screen.draw(component);
 			
-			if (uploadMode)
+			if (uploader)
 			{
-				uploadScreen(name, screen);
+				uploader.upload(name + ".png", screen);
 				return true;
 			}
 			
@@ -96,32 +81,6 @@ package jx
 			}
 			
 			return false;
-		}
-		
-		private static function uploadScreen(name:String, screen:BitmapData):void
-		{
-			var image:ByteArray = new PNGEncoder().encode(screen);
-			
-			var request:URLRequest = new URLRequest(uploadUrl);
-				request.requestHeaders.push(new URLRequestHeader("Content-type", "application/octet-stream"));
-				request.requestHeaders.push(new URLRequestHeader("X-File-Name", name + ".png"));
-				request.method = "POST";
-				request.data = image;
-			
-			var loader:URLLoader = new URLLoader()
-				loader.addEventListener(Event.COMPLETE, function(event:Event):void
-				{
-					if (loader.data != "done") trace(loader.data);
-				});
-				loader.addEventListener(IOErrorEvent.IO_ERROR, function(event:Event):void
-				{
-					trace(event);
-				});
-				loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, function(event:Event):void
-				{
-					trace(event);
-				});
-				loader.load(request);
 		}
 		
 	}

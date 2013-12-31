@@ -9,6 +9,7 @@
 			
 			import jx.LoadQueue;
 			import jx.ScreenShot;
+			import jx.Uploader;
 			
 			import org.flexunit.runner.FlexUnitCore;
 			
@@ -27,8 +28,7 @@
 			
 			private function screenLoader_completeHandler(event:Event):void
 			{
-				ScreenShot.uploadUrl = "http://localhost/upload/ui-test.php";
-				ScreenShot.uploadMode = false;
+				ScreenShot.uploader = new Uploader("http://localhost/upload/ui-test.php");
 				ScreenShot.dictionary = queue.dictionary;
 				
 				var core:FlexUnitCore = new FlexUnitCore();

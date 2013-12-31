@@ -5,7 +5,7 @@ ScreenShot is the ActionScript 3 util for integration testing of ui components w
 
 ## Use
 
-At first of all you have to prepare `ScreenShot` and `LoadQueue` objects. Following code should be part of a Main.as file:
+At first of all you have to prepare `ScreenShot`, `LoadQueue` and `Uploader` objects. Following code should be part of a Main.as file:
 
 	private var queue:LoadQueue;
 	...
@@ -23,11 +23,9 @@ At first of all you have to prepare `ScreenShot` and `LoadQueue` objects. Follow
 	private function screenLoader_completeHandler(event:Event):void
 	{
 		ScreenShot.dictionary = queue.dictionary;
-		// set the upload url
-		ScreenShot.uploadUrl = "http://localhost/ui-test.php";
-		// indicates if we are creating (true) or testing (false)
-		ScreenShot.uploadMode = false;
-
+		// When ScreenShot.uploader is set, then screen shots aren't compared, but they
+		// are sent to the server as a png stream.
+		ScreenShot.uploader = new Uploader("http://localhost/ui-test.php");
 		// here starts FlexUnit tests...
 	}
 
@@ -44,7 +42,7 @@ FlexUnit 4 test:
 		Assert.assertTrue(ScreenShot.compare("SquareTest.defaultColor", component));
 	}
 
-When we run this test with `ScreenShot.uploadMode = true`, then generated screen shots are sent to the `ScreenShot.uploadUrl` as a png file stream. Php handles uploads, saves them to specified destination, where we check them and the good ones we copy to our "data" (`new LoadQueue("../data/");`) direcotory. Then we can run the tests with `ScreenShot.uploadMode = false` and see the results - each test should pass until we made some changes in our ui components...
+When we run this test with `ScreenShot.uploader = new Uploader("...")`, then generated screen shots are sent to the server as a png file stream. Server handles uploads, saves them to the specified destination, where we check them and the good ones we copy to our "data" (`new LoadQueue("../data/");`) direcotory. Then we can run the tests with `ScreenShot.uploader = null` (or comment that line of code) and see the results - each test should pass until we made some changes in our ui components...
 
 You can take a look at these classes for more information how to use this testing util:
 

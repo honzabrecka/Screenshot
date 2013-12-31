@@ -89,6 +89,7 @@ package tests.jx
 			c = null;
 			square = null;
 			ScreenShot.dictionary = null;
+			ScreenShot.uploader = null;
 		}
 		
 		[Test]
@@ -133,6 +134,17 @@ package tests.jx
 			containerForUIComponent.addChild(square);
 			square.color = 0x0000ff;
 			Assert.assertFalse(ScreenShot.compare("SquareTest.defaultColor", square));
+		}
+		
+		[Test(async)]
+		public function upload():void
+		{
+			var uploader:MockedUploader = new MockedUploader("");
+			ScreenShot.uploader = uploader;
+			Async.proceedOnEvent(this, square, UIComponentEvent.CREATION_COMPLETE);
+			containerForUIComponent.addChild(square);
+			Assert.assertTrue(ScreenShot.compare("SquareTest.defaultColor", square));
+			Assert.assertEquals(1, uploader.uploadCalled);
 		}
 		
 	}
