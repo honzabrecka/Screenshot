@@ -21,6 +21,8 @@ package tests.jx
 	{
 		
 		public var uploadCalled:uint = 0;
+		public var name:String;
+		public var screen:BitmapData;
 		
 		public function MockedUploader(url:String)
 		{
@@ -30,6 +32,8 @@ package tests.jx
 		override public function upload(name:String, screen:BitmapData):void
 		{
 			uploadCalled++;
+			this.name = name;
+			this.screen = screen;
 		}
 		
 	}

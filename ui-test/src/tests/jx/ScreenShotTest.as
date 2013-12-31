@@ -150,6 +150,8 @@ package tests.jx
 			
 			Assert.assertTrue(ScreenShot.compare("Square", square));
 			Assert.assertEquals(1, uploader.uploadCalled);
+			Assert.assertEquals("Square.png", uploader.name);
+			Assert.assertNotNull(uploader.screen);
 		}
 		
 	}
