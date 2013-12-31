@@ -15,10 +15,6 @@ package tests.jx
 	
 	import spark.components.Button;
 	
-	import flexunit.framework.Assert;
-	
-	import jx.ScreenShot;
-	
 	import org.flexunit.async.Async;
 	
 	import tests.TestCase;
@@ -62,7 +58,7 @@ package tests.jx
 			
 			waitToTest(function(event:Event, data:Object):void
 			{
-				Assert.assertTrue(ScreenShot.compare("FlexButtonTest.labelAndSize", button));
+				assertScreenShot("FlexButtonTest.labelAndSize", button);
 			});
 		}
 		

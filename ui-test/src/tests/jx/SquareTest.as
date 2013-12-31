@@ -12,7 +12,6 @@ package tests.jx
 	
 	import flexunit.framework.Assert;
 	
-	import jx.ScreenShot;
 	import jx.Square;
 	
 	import org.flexunit.async.Async;
@@ -55,7 +54,7 @@ package tests.jx
 		{
 			
 			Assert.assertEquals(0x000000, component.color);
-			Assert.assertTrue(ScreenShot.compare("SquareTest.defaultColor", component));
+			assertScreenShot("SquareTest.defaultColor", component);
 		}
 		
 		[Test(async)]
@@ -63,7 +62,7 @@ package tests.jx
 		{
 			component.color = 0xFF0000;
 			Assert.assertEquals(0xFF0000, component.color);
-			Assert.assertTrue(ScreenShot.compare("SquareTest.changedColor", component));
+			assertScreenShot("SquareTest.changedColor", component);
 		}
 		
 	}
