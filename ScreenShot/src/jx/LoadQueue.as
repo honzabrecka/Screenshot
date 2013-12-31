@@ -18,6 +18,8 @@ package jx
 	import flash.net.URLRequest;
 	import flash.utils.Dictionary;
 	
+	[Event(name="complete", type="flash.events.Event")]
+	
 	/**
 	 * @author Jan Břečka
 	 * @langversion 3.0
@@ -42,7 +44,7 @@ package jx
 		
 		public function get dictionary():Dictionary
 		{
-			if (!_dictionary) throw new IllegalOperationError("You have to call load method before.");
+			if (!_dictionary) throw new IllegalOperationError("You have to call load method first.");
 			return _dictionary;
 		}
 		
@@ -80,7 +82,6 @@ package jx
 		{
 			pushBitmap(queue[index], null);
 			failed++;
-			//trace("ScreenShotLoader:", queue[index], "is missing.");
 			destroyLoader();
 			loadNext();
 		}
