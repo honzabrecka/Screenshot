@@ -32,24 +32,26 @@ package tests.jx
 		
 		private var component:Square;
 		
-		[Before]
+		[Before(async)]
 		public function setUp():void
 		{
 			component = new Square();
+			Async.proceedOnEvent(this, component, UIComponentEvent.CREATION_COMPLETE);
+			containerForUIComponent.addChild(component);
 		}
 		
-		[After]
+		[After(async)]
 		public function tearDown():void
 		{
 			component.clear();
+			containerForUIComponent.removeChild(component);
 			component = null;
 		}
 		
 		[Test(async)]
 		public function defaultColor():void
 		{
-			Async.proceedOnEvent(this, component, UIComponentEvent.CREATION_COMPLETE);
-			containerForUIComponent.addChild(component);
+			
 			Assert.assertEquals(0x000000, component.color);
 			Assert.assertTrue(ScreenShot.compare("SquareTest.defaultColor", component));
 		}
@@ -57,8 +59,6 @@ package tests.jx
 		[Test(async)]
 		public function changedColor():void
 		{
-			Async.proceedOnEvent(this, component, UIComponentEvent.CREATION_COMPLETE);
-			containerForUIComponent.addChild(component);
 			component.color = 0xFF0000;
 			Assert.assertEquals(0xFF0000, component.color);
 			Assert.assertTrue(ScreenShot.compare("SquareTest.changedColor", component));
