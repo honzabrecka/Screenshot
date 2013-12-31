@@ -17,6 +17,7 @@ package tests.jx
 	import jx.ScreenShot;
 	import jx.Square;
 	import jx.UIComponentEvent;
+	import jx.Uploader;
 	
 	import org.flexunit.async.Async;
 	
@@ -39,7 +40,7 @@ package tests.jx
 		[Embed(source="../../../data/c.png")]
 		private static const C:Class;
 		
-		[Embed(source="../../../data/SquareTest.defaultColor.png")]
+		[Embed(source="../../../data/Square.png")]
 		private static const SquareScreen:Class;
 		
 		public function ScreenShotTest()
@@ -52,21 +53,24 @@ package tests.jx
 		private var c:BitmapData;
 		private var square:Square;
 		
-		private static var tempScreenShotDictionary:Dictionary;
+		private static var tempDictionary:Dictionary;
+		private static var tempUploader:Uploader;
 		
 		[BeforeClass]
 		public static function setUpClass():void
 		{
-			tempScreenShotDictionary = ScreenShot.dictionary;
+			tempDictionary = ScreenShot.dictionary;
+			tempUploader = ScreenShot.uploader;
 		}
 		
 		[AfterClass]
 		public static function tearDownClass():void
 		{
-			ScreenShot.dictionary = tempScreenShotDictionary;
+			ScreenShot.dictionary = tempDictionary;
+			ScreenShot.uploader = tempUploader;
 		}
 		
-		[Before]
+		[Before(async)]
 		public function setUp():void
 		{
 			a = Bitmap(new A()).bitmapData;
@@ -75,10 +79,13 @@ package tests.jx
 			square = new Square();
 			
 			ScreenShot.dictionary = new Dictionary();
-			ScreenShot.dictionary["SquareTest.defaultColor"] = Bitmap(new SquareScreen()).bitmapData;
+			ScreenShot.dictionary["Square"] = Bitmap(new SquareScreen()).bitmapData;
+			
+			Async.proceedOnEvent(this, square, UIComponentEvent.CREATION_COMPLETE);
+			containerForUIComponent.addChild(square);
 		}
 		
-		[After]
+		[After(async)]
 		public function tearDown():void
 		{
 			a.dispose();
@@ -87,9 +94,13 @@ package tests.jx
 			b = null;
 			c.dispose();
 			c = null;
-			square = null;
+			
 			ScreenShot.dictionary = null;
 			ScreenShot.uploader = null;
+			
+			containerForUIComponent.removeChild(square);
+			square.clear();
+			square = null;
 		}
 		
 		[Test]
@@ -114,26 +125,20 @@ package tests.jx
 		public function missingDictionary():void
 		{
 			ScreenShot.dictionary = null;
-			Async.proceedOnEvent(this, square, UIComponentEvent.CREATION_COMPLETE);
-			containerForUIComponent.addChild(square);
 			ScreenShot.compare("whatever, because dictionary is null...", square);
 		}
 		
 		[Test(async)]
 		public function compareGood():void
 		{
-			Async.proceedOnEvent(this, square, UIComponentEvent.CREATION_COMPLETE);
-			containerForUIComponent.addChild(square);
-			Assert.assertTrue(ScreenShot.compare("SquareTest.defaultColor", square));
+			Assert.assertTrue(ScreenShot.compare("Square", square));
 		}
 		
 		[Test(async)]
 		public function compareBad():void
 		{
-			Async.proceedOnEvent(this, square, UIComponentEvent.CREATION_COMPLETE);
-			containerForUIComponent.addChild(square);
 			square.color = 0x0000ff;
-			Assert.assertFalse(ScreenShot.compare("SquareTest.defaultColor", square));
+			Assert.assertFalse(ScreenShot.compare("Square", square));
 		}
 		
 		[Test(async)]
@@ -141,9 +146,8 @@ package tests.jx
 		{
 			var uploader:MockedUploader = new MockedUploader("");
 			ScreenShot.uploader = uploader;
-			Async.proceedOnEvent(this, square, UIComponentEvent.CREATION_COMPLETE);
-			containerForUIComponent.addChild(square);
-			Assert.assertTrue(ScreenShot.compare("SquareTest.defaultColor", square));
+			
+			Assert.assertTrue(ScreenShot.compare("Square", square));
 			Assert.assertEquals(1, uploader.uploadCalled);
 		}
 		
