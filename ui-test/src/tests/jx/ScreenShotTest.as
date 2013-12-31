@@ -12,11 +12,12 @@ package tests.jx
 	import flash.display.BitmapData;
 	import flash.utils.Dictionary;
 	
+	import mx.events.FlexEvent;
+	
 	import flexunit.framework.Assert;
 	
 	import jx.ScreenShot;
 	import jx.Square;
-	import jx.UIComponentEvent;
 	import jx.Uploader;
 	
 	import org.flexunit.async.Async;
@@ -81,7 +82,7 @@ package tests.jx
 			ScreenShot.dictionary = new Dictionary();
 			ScreenShot.dictionary["Square"] = Bitmap(new SquareScreen()).bitmapData;
 			
-			Async.proceedOnEvent(this, square, UIComponentEvent.CREATION_COMPLETE);
+			Async.proceedOnEvent(this, square, FlexEvent.CREATION_COMPLETE);
 			containerForUIComponent.addChild(square);
 		}
 		

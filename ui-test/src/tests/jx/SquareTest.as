@@ -8,13 +8,15 @@
 
 package tests.jx
 {
+	import mx.events.FlexEvent;
+	
 	import flexunit.framework.Assert;
 	
-	import jx.Square;
-	import jx.UIComponentEvent;
 	import jx.ScreenShot;
+	import jx.Square;
 	
 	import org.flexunit.async.Async;
+	
 	import tests.TestCase;
 
 	/**
@@ -36,7 +38,7 @@ package tests.jx
 		public function setUp():void
 		{
 			component = new Square();
-			Async.proceedOnEvent(this, component, UIComponentEvent.CREATION_COMPLETE);
+			Async.proceedOnEvent(this, component, FlexEvent.CREATION_COMPLETE);
 			containerForUIComponent.addChild(component);
 		}
 		

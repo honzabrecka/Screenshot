@@ -11,6 +11,8 @@ package jx
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
+	import mx.events.FlexEvent;
+	
 	/**
 	 * @author Jan Břečka
 	 * @langversion 3.0
@@ -39,7 +41,7 @@ package jx
 			drawBackground();
 			createChildren();
 			_childrenCreated = true;
-			dispatchEvent(new UIComponentEvent(UIComponentEvent.CREATION_COMPLETE));
+			dispatchEvent(new FlexEvent(FlexEvent.CREATION_COMPLETE));
 		}
 		
 		protected function drawBackground():void
