@@ -21,7 +21,7 @@ package tests
 			super();
 		}
 		
-		protected function waitToTest(listener:Function, waitTime:uint, passThroughData:Object=null):void
+		protected function waitToTest(listener:Function, waitTime:uint=0, passThroughData:Object=null):void
 		{
 			var asyncHandler:Function = Async.asyncHandler(this, listener, waitTime + 250, passThroughData);
 			var timer:Timer = new Timer(waitTime, 1);
