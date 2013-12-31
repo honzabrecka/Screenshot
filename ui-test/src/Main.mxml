@@ -13,6 +13,7 @@
 			
 			import org.flexunit.runner.FlexUnitCore;
 			
+			import tests.jx.FlexButtonTest;
 			import tests.jx.LoadQueueTest;
 			import tests.jx.ScreenShotTest;
 			import tests.jx.SquareTest;
@@ -23,17 +24,17 @@
 			{
 				queue = new LoadQueue("../data/");
 				queue.addEventListener(Event.COMPLETE, screenLoader_completeHandler);
-				queue.load(new <String>["SquareTest.defaultColor", "SquareTest.changedColor"]);
+				queue.load(new <String>["SquareTest.defaultColor", "SquareTest.changedColor", "FlexButtonTest.labelAndSize"]);
 			}
 			
 			private function screenLoader_completeHandler(event:Event):void
 			{
-				ScreenShot.uploader = new Uploader("http://localhost/upload/ui-test.php");
+				//ScreenShot.uploader = new Uploader("http://localhost/upload/ui-test.php");
 				ScreenShot.dictionary = queue.dictionary;
 				
 				var core:FlexUnitCore = new FlexUnitCore();
 					core.addListener(runner);
-					core.run(ScreenShotTest, LoadQueueTest, SquareTest);
+					core.run(ScreenShotTest, LoadQueueTest, SquareTest, FlexButtonTest);
 			}
 			
 		]]>

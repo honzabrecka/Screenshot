@@ -1,7 +1,7 @@
 ScreenShot
 ==========
 
-ScreenShot is the ActionScript 3 util for integration testing of ui components writen in pure ActionScript. It perfectly works with FlexUnit testing flow. Currently it doesn't support Flex Framework components.
+ScreenShot is the ActionScript 3 util for integration testing of ui components. It perfectly works with FlexUnit testing flow and Flex Framwork ui components.
 
 ## Use
 
@@ -48,4 +48,5 @@ You can take a look at these classes for more information how to use this testin
 
  - `jx.Square`
  - `tests.jx.SquareTest`
+ - `tests.jx.FlexButtonTest`
  - `Main.mxml`
