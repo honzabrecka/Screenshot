@@ -22,7 +22,7 @@ package jx
 	{
 		
 		public static var dictionary:Dictionary;
-		public static var uploader:Uploader;
+		public static var save:Save;
 		
 		public function ScreenShot()
 		{
@@ -42,9 +42,9 @@ package jx
 			var screen:BitmapData = new BitmapData(component.width, component.height);
 				screen.draw(component);
 			
-			if (uploader)
+			if (save)
 			{
-				uploader.upload(name + ".png", screen);
+				save.save(name + ".png", screen);
 				return true;
 			}
 			

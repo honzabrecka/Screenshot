@@ -10,30 +10,27 @@ package tests.jx
 {
 	import flash.display.BitmapData;
 	
-	import jx.Uploader;
+	import jx.Save;
 	
 	/**
 	 * @author Jan Břečka
 	 * @langversion 3.0
 	 */
 	
-	public class MockedUploader extends Uploader
+	public class TestSave implements Save
 	{
 		
-		public var uploadCalled:uint = 0;
+		public var saveCalledCount:uint = 0;
 		public var name:String;
-		public var screen:BitmapData;
+		public var screenShot:BitmapData;
 		
-		public function MockedUploader(url:String)
-		{
-			super(url);
-		}
+		public function TestSave() { }
 		
-		override public function upload(name:String, screen:BitmapData):void
+		public function save(name:String, screenShot:BitmapData):void
 		{
-			uploadCalled++;
+			saveCalledCount++;
 			this.name = name;
-			this.screen = screen;
+			this.screenShot = screenShot;
 		}
 		
 	}

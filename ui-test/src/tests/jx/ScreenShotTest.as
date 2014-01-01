@@ -16,9 +16,9 @@ package tests.jx
 	
 	import flexunit.framework.Assert;
 	
+	import jx.Save;
 	import jx.ScreenShot;
 	import jx.Square;
-	import jx.Uploader;
 	
 	import org.flexunit.async.Async;
 	
@@ -55,20 +55,20 @@ package tests.jx
 		private var square:Square;
 		
 		private static var tempDictionary:Dictionary;
-		private static var tempUploader:Uploader;
+		private static var tempSaver:Save;
 		
 		[BeforeClass]
 		public static function setUpClass():void
 		{
 			tempDictionary = ScreenShot.dictionary;
-			tempUploader = ScreenShot.uploader;
+			tempSaver = ScreenShot.save;
 		}
 		
 		[AfterClass]
 		public static function tearDownClass():void
 		{
 			ScreenShot.dictionary = tempDictionary;
-			ScreenShot.uploader = tempUploader;
+			ScreenShot.save = tempSaver;
 		}
 		
 		[Before(async)]
@@ -97,7 +97,7 @@ package tests.jx
 			c = null;
 			
 			ScreenShot.dictionary = null;
-			ScreenShot.uploader = null;
+			ScreenShot.save = null;
 			
 			containerForUIComponent.removeChild(square);
 			square.clear();
@@ -145,13 +145,13 @@ package tests.jx
 		[Test(async)]
 		public function upload():void
 		{
-			var uploader:MockedUploader = new MockedUploader("");
-			ScreenShot.uploader = uploader;
+			var uploader:TestSave = new TestSave();
+			ScreenShot.save = uploader;
 			
 			Assert.assertTrue(ScreenShot.compare("Square", square));
-			Assert.assertEquals(1, uploader.uploadCalled);
+			Assert.assertEquals(1, uploader.saveCalledCount);
 			Assert.assertEquals("Square.png", uploader.name);
-			Assert.assertNotNull(uploader.screen);
+			Assert.assertNotNull(uploader.screenShot);
 		}
 		
 	}

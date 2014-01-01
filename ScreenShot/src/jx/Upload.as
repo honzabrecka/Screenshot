@@ -24,21 +24,21 @@ package jx
 	 * @langversion 3.0
 	 */
 	
-	public class Uploader
+	public class Upload implements Save
 	{
 		
 		private var url:String;
 		private var enableLogger:Boolean;
 		
-		public function Uploader(url:String, enableLogger:Boolean=false)
+		public function Upload(url:String, enableLogger:Boolean=false)
 		{
 			this.url = url;
 			this.enableLogger = enableLogger;
 		}
 		
-		public function upload(name:String, screen:BitmapData):void
+		public function save(name:String, screenShot:BitmapData):void
 		{
-			var image:ByteArray = convertScreen(screen);
+			var image:ByteArray = convertScreen(screenShot);
 			var request:URLRequest = createRequest(name, image);
 			var loader:URLLoader = new URLLoader()
 				loader.addEventListener(Event.COMPLETE, function(event:Event):void
