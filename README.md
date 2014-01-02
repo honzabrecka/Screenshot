@@ -1,52 +1,48 @@
 ScreenShot
 ==========
 
-ScreenShot is the ActionScript 3 util for integration testing of ui components. It perfectly works with FlexUnit testing flow and Flex Framwork ui components.
+ScreenShot is the ActionScript 3 util for integration testing of ui components. It perfectly works with FlexUnit testing flow and Flex Framework ui components.
 
-## Use
+## Lightweight and easy to use
 
-At first of all you have to prepare `ScreenShot`, `LoadQueue` and `Uploader` objects. Following code should be part of a Main.as file:
+ScreenShot has two phases. First is when screen shots are created. In this phase all your integration tests pass. Second phase is when components are compared with their screen shots generated in previous phase.
 
-	private var queue:LoadQueue;
+Let's start with the second one:
+
+Current state of a component is compared with its screen shot, which can be embeded or loaded in runtime. The main magic happens in the full static `ScreenShot` class. First of all you have to set `ScreenShot.dictionary` to a `Dictionary` object. `Dictionary` is the simple key value storage. Key is a name and value is a `BitmapData`.
+
+	[Embed(source="SquareTest.defaultColor.png")]
+	private var SquareWithDefaultColor:Class;
 	...
-	// create a new instance of the LoadQueue with path, where screens are stored
-	queue = new LoadQueue("../data/");
-	queue.addEventListener(Event.COMPLETE, screenLoader_completeHandler);
-	// list of screens
-	var list:Vector.<String> = new <String>
-	[
-		"SquareTest.defaultColor",
-		"SquareTest.changedColor"
-	];
-	queue.load(list);
-	...
-	private function screenLoader_completeHandler(event:Event):void
-	{
-		ScreenShot.dictionary = queue.dictionary;
-		// When ScreenShot.uploader is set, then screen shots aren't compared, but they
-		// are sent to the server as a png stream.
-		ScreenShot.uploader = new Uploader("http://localhost/ui-test.php");
-		// here starts FlexUnit tests...
-	}
+	ScreenShot.dictionary = new Dictionary();
+	ScreenShot.dictionary["SquareTest.defaultColor"] = Bitmap(new SquareWithDefaultColor()).bitmapData;
 
-FlexUnit 4 test:
+If you prefer to load screen shot in runtime, you can use the `LoadQueue` class:
+
+	// ../data/ is the path, where the screen shots are stored
+	var queue:LoadQueue = new LoadQueue("../data/");
+		queue.addEventListener(Event.COMPLETE, function(event:Event):void
+		{
+			ScreenShot.dictionary = queue.dictionary;
+		});
+		// list of the screen shot, which will be loaded (name is without any extension!)
+		queue.load(new <String>["quareTest.defaultColor"]);
+
+Use in test case is simple boolean assertion:
 
 	[Test(async)]
 	public function defaultColor():void
 	{
 		var component:Square = new Square();
-		Async.proceedOnEvent(this, component, UIComponentEvent.CREATION_COMPLETE);
+		Async.proceedOnEvent(this, component, FlexEvent.CREATION_COMPLETE);
 		containerForUIComponent.addChild(component);
-		Assert.assertEquals(0x000000, component.color);
-		// Assert if the component looks like on the sreen shot
+		// out assertion
 		Assert.assertTrue(ScreenShot.compare("SquareTest.defaultColor", component));
 	}
 
-When we run this test with `ScreenShot.uploader = new Uploader("...")`, then generated screen shots are sent to the server as a png file stream. Server handles uploads, saves them to the specified destination, where we check them and the good ones we copy to our "data" (`new LoadQueue("../data/");`) direcotory. Then we can run the tests with `ScreenShot.uploader = null` (or comment that line of code) and see the results - each test should pass until we made some changes in our ui components...
+Now you know how to use the `ScreenShot` class to test your components with their screen shots. But, we don't have them. Let's generate some. It will be much more easier than you would have expected. You don't have to change anything. Everything you have to do is set `ScreenShot.save` to anything else than `null`. And also it has to implement the `Save` interface. Once it's setted screen shots are generated.
 
-You can take a look at these classes for more information how to use this testing util:
+	// http://localhost/ui-test.php is the path, where the screen shots sent
+	ScreenShot.save = new Upload("http://localhost/ui-test.php");
 
- - `jx.Square`
- - `tests.jx.SquareTest`
- - `tests.jx.FlexButtonTest`
- - `Main.mxml`
+It was easy, right? Now you can run your tests in phase one. Please note that all `ScreenShot.compare` tests will pass. Screen shot will be saved and you can continue with the second phase. Just comment the `ScreenShot.save = new Upload("http://localhost/ui-test.php");` line and run the test suite. All your tests should pass. Everything is done and ready, so you can start to make some changes...
