@@ -43,6 +43,6 @@ Use in test case is simple boolean assertion:
 Now you know how to use the `ScreenShot` class to test your components with their screen shots. But, we don't have them. Let's generate some. It will be much more easier than you would have expected. You don't have to change anything. Everything you have to do is set `ScreenShot.save` to anything else than `null`. And also it has to implement the `Save` interface. Once it's setted screen shots are generated.
 
 	// http://localhost/ui-test.php is the path, where the screen shots sent
-	ScreenShot.save = new Upload("http://localhost/ui-test.php");
+	ScreenShot.save = new Upload("http://localhost/upload.php");
 
-It was easy, right? Now you can run your tests in phase one. Please note that all `ScreenShot.compare` tests will pass. Screen shot will be saved and you can continue with the second phase. Just comment the `ScreenShot.save = new Upload("http://localhost/ui-test.php");` line and run the test suite. All your tests should pass. Everything is done and ready, so you can start to make some changes...
+It was easy, right? Now you can run your tests in phase one. Please note that all `ScreenShot.compare` tests will pass. Screen shot will be saved and you can continue with the second phase. Just comment the `ScreenShot.save = new Upload("http://localhost/upload.php");` line and run the test suite. All your tests should pass. Everything is done and ready, so you can start to make some changes...
