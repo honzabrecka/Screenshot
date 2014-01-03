@@ -15,6 +15,7 @@ package tests.jx
 	import jx.Square;
 	
 	import org.flexunit.async.Async;
+	import org.fluint.uiImpersonation.UIImpersonator;
 	
 	import tests.TestCase;
 
@@ -33,19 +34,19 @@ package tests.jx
 		
 		private var component:Square;
 		
-		[Before(async)]
+		[Before(async, ui)]
 		public function setUp():void
 		{
 			component = new Square();
 			Async.proceedOnEvent(this, component, FlexEvent.CREATION_COMPLETE);
-			containerForUIComponent.addChild(component);
+			UIImpersonator.addChild(component);
 		}
 		
-		[After(async)]
+		[After(async, ui)]
 		public function tearDown():void
 		{
 			component.clear();
-			containerForUIComponent.removeChild(component);
+			UIImpersonator.removeChild(component);
 			component = null;
 		}
 		

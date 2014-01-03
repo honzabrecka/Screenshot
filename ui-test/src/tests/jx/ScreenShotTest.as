@@ -21,6 +21,7 @@ package tests.jx
 	import jx.Square;
 	
 	import org.flexunit.async.Async;
+	import org.fluint.uiImpersonation.UIImpersonator;
 	
 	import tests.TestCase;
 	
@@ -71,7 +72,7 @@ package tests.jx
 			ScreenShot.save = tempSaver;
 		}
 		
-		[Before(async)]
+		[Before(async, ui)]
 		public function setUp():void
 		{
 			a = Bitmap(new A()).bitmapData;
@@ -83,10 +84,10 @@ package tests.jx
 			ScreenShot.dictionary["Square"] = Bitmap(new SquareScreen()).bitmapData;
 			
 			Async.proceedOnEvent(this, square, FlexEvent.CREATION_COMPLETE);
-			containerForUIComponent.addChild(square);
+			UIImpersonator.addChild(square);
 		}
 		
-		[After(async)]
+		[After(async, ui)]
 		public function tearDown():void
 		{
 			a.dispose();
@@ -99,7 +100,7 @@ package tests.jx
 			ScreenShot.dictionary = null;
 			ScreenShot.save = null;
 			
-			containerForUIComponent.removeChild(square);
+			UIImpersonator.removeChild(square);
 			square.clear();
 			square = null;
 		}
