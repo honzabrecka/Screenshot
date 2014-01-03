@@ -26,11 +26,6 @@ package tests.jx
 	public class LoadQueueTest extends TestCase
 	{
 		
-		public function LoadQueueTest()
-		{
-			super();
-		}
-		
 		private var loader:LoadQueue;
 		
 		[Before]

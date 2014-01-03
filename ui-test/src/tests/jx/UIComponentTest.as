@@ -22,11 +22,6 @@ package tests.jx
 	public class UIComponentTest extends TestCase
 	{
 		
-		public function UIComponentTest()
-		{
-			super();
-		}
-		
 		private var component:UIComponent;
 		
 		[Before]

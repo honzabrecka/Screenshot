@@ -27,11 +27,6 @@ package tests.jx
 	public class FlexButtonTest extends TestCase
 	{
 		
-		public function FlexButtonTest()
-		{
-			super();
-		}
-		
 		private var button:Button;
 		
 		[Before(async)]

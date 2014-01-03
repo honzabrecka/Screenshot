@@ -45,11 +45,6 @@ package tests.jx
 		[Embed(source="../../../data/Square.png")]
 		private static const SquareScreen:Class;
 		
-		public function ScreenShotTest()
-		{
-			super();
-		}
-		
 		private var a:BitmapData;
 		private var b:BitmapData;
 		private var c:BitmapData;

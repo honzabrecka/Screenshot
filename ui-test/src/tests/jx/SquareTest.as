@@ -27,11 +27,6 @@ package tests.jx
 	public class SquareTest extends TestCase
 	{
 		
-		public function SquareTest()
-		{
-			super();
-		}
-		
 		private var component:Square;
 		
 		[Before(async, ui)]
