@@ -30,14 +30,14 @@ If you prefer to load screen shot in runtime, you can use the `LoadQueue` class:
 
 Use in test case is simple boolean assertion:
 
-	[Test(async)]
+	[Test(async, ui)]
 	public function defaultColor():void
 	{
 		var component:Square = new Square();
 		Async.proceedOnEvent(this, component, FlexEvent.CREATION_COMPLETE);
-		containerForUIComponent.addChild(component);
+		UIImpersonator.addChild(component);
 		// out assertion
-		Assert.assertTrue(ScreenShot.compare("SquareTest.defaultColor", component));
+		assertTrue(ScreenShot.compare("SquareTest.defaultColor", component));
 	}
 
 Now you know how to use the `ScreenShot` class to test your components with their screen shots. But, we don't have them. Let's generate some. It will be much more easier than you would have expected. You don't have to change anything. Everything you have to do is set `ScreenShot.save` to anything else than `null`. And also it has to implement the `Save` interface. Once it's setted screen shots are generated.
