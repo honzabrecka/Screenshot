@@ -8,10 +8,13 @@
 
 package tests.jx
 {
+	import mx.events.FlexEvent;
+	
 	import jx.UIComponent;
-	import jx.UIComponentEvent;
 	
 	import org.flexunit.async.Async;
+	import org.fluint.uiImpersonation.UIImpersonator;
+	
 	import tests.TestCase;
 	
 	/**
@@ -34,14 +37,15 @@ package tests.jx
 		public function tearDown():void
 		{
 			component.clear();
+			UIImpersonator.removeChild(component);
 			component = null;
 		}
 		
 		[Test(async)]
 		public function creationCompleteEvent():void
 		{
-			Async.handleEvent(this, component, UIComponentEvent.CREATION_COMPLETE, null);
-			containerForUIComponent.addChild(component);
+			Async.handleEvent(this, component, FlexEvent.CREATION_COMPLETE, null);
+			UIImpersonator.addChild(component);
 		}
 		
 	}
