@@ -26,7 +26,7 @@ If you prefer to load screen shot in runtime, you can use the `LoadQueue` class:
 			ScreenShot.dictionary = queue.dictionary;
 		});
 		// list of the screen shot, which will be loaded (name is without any extension!)
-		queue.load(new <String>["quareTest.defaultColor"]);
+		queue.load(new <String>["SquareTest.defaultColor"]);
 
 Use in test case is simple boolean assertion:
 
