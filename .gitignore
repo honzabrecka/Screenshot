@@ -4,6 +4,7 @@ bin/
 bin-debug/
 bin-release/
 asdoc-output/
+html-template/
 
 # Eclipse/Flex/Flash Builder project files
 .settings/
