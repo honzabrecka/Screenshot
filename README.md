@@ -49,7 +49,7 @@ public function defaultColor():void
 Now you know how to use the `ScreenShot` class to test your components with their screen shots. But, we don't have them. Let's generate some. It will be much more easier than you would have expected. You don't have to change anything. Everything you have to do is set `ScreenShot.save` to anything else than `null`. And also it has to implement the `Save` interface. Once it's setted screen shots are generated.
 
 ```as3
-// http://localhost/ui-test.php is the path, where the screen shots sent
+// http://localhost/upload.php is the path, where the screen shots will be sent
 ScreenShot.save = new Upload("http://localhost/upload.php");
 ```
 
