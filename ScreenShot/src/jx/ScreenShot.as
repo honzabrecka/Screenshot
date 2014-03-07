@@ -11,7 +11,6 @@ package jx
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.errors.IllegalOperationError;
-	import flash.utils.Dictionary;
 
 	/**
 	 * @author Jan Břečka
@@ -21,7 +20,7 @@ package jx
 	public class ScreenShot
 	{
 		
-		public static var dictionary:Dictionary;
+		public static var dictionary:Object;
 		public static var save:Save;
 		
 		public function ScreenShot()

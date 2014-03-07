@@ -10,7 +10,6 @@ package tests.jx
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.utils.Dictionary;
 	
 	import mx.events.FlexEvent;
 	
@@ -50,7 +49,7 @@ package tests.jx
 		private var c:BitmapData;
 		private var square:Square;
 		
-		private static var tempDictionary:Dictionary;
+		private static var tempDictionary:Object;
 		private static var tempSaver:Save;
 		
 		[BeforeClass]
@@ -75,7 +74,7 @@ package tests.jx
 			c = Bitmap(new C()).bitmapData;
 			square = new Square();
 			
-			ScreenShot.dictionary = new Dictionary();
+			ScreenShot.dictionary = {};
 			ScreenShot.dictionary["Square"] = Bitmap(new SquareScreen()).bitmapData;
 			
 			Async.proceedOnEvent(this, square, FlexEvent.CREATION_COMPLETE);

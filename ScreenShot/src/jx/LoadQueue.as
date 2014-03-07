@@ -16,7 +16,6 @@ package jx
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLRequest;
-	import flash.utils.Dictionary;
 	
 	[Event(name="complete", type="flash.events.Event")]
 	
@@ -30,7 +29,7 @@ package jx
 		
 		private var path:String;
 		private var queue:Vector.<String>;
-		private var _dictionary:Dictionary;
+		private var _dictionary:Object;
 		private var processing:Boolean = false;
 		private var loaded:uint;
 		private var failed:uint;
@@ -42,7 +41,7 @@ package jx
 			this.path = path;
 		}
 		
-		public function get dictionary():Dictionary
+		public function get dictionary():Object
 		{
 			if (!_dictionary) throw new IllegalOperationError("You have to call load method first.");
 			return _dictionary;
@@ -54,7 +53,7 @@ package jx
 			if (!queue) throw new ArgumentError("Queue can't be empty.");
 			this.queue = queue;
 			
-			_dictionary = new Dictionary();
+			_dictionary = {};
 			loaded = 0;
 			failed = 0;
 			index = 0;
