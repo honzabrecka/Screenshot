@@ -31,8 +31,6 @@ package jx
 		private var queue:Vector.<String>;
 		private var _dictionary:Object;
 		private var processing:Boolean = false;
-		private var loaded:uint;
-		private var failed:uint;
 		private var loader:Loader;
 		private var index:uint;
 		
@@ -54,8 +52,6 @@ package jx
 			this.queue = queue;
 			
 			_dictionary = {};
-			loaded = 0;
-			failed = 0;
 			index = 0;
 			processing = true;
 			loadBitmap(currentPath);
@@ -71,23 +67,20 @@ package jx
 		
 		private function loader_completeHandler(event:Event):void
 		{
-			pushBitmap(queue[index], Bitmap(loader.content).bitmapData);
-			loaded++;
-			destroyLoader();
-			loadNext();
+			loadComplete(Bitmap(loader.content).bitmapData);
 		}
 		
 		private function loader_errorHandler(event:Event):void
 		{
-			pushBitmap(queue[index], null);
-			failed++;
-			destroyLoader();
-			loadNext();
+			loadComplete(null);
 		}
 		
-		private function pushBitmap(name:String, image:BitmapData):void
+		private function loadComplete(data:BitmapData):void
 		{
-			_dictionary[name] = image;
+			var name:String = queue[index];
+			_dictionary[name] = data;
+			destroyLoader();
+			loadNext();
 		}
 		
 		private function destroyLoader():void
