@@ -51,6 +51,10 @@ package jx
 			if (!queue) throw new ArgumentError("Queue can't be empty.");
 			this.queue = queue;
 			
+			loader = new Loader();
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loader_completeHandler);
+			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, loader_errorHandler);
+			
 			_dictionary = {};
 			index = 0;
 			processing = true;
@@ -59,9 +63,6 @@ package jx
 		
 		private function loadBitmap(path:String):void
 		{
-			loader = new Loader();
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loader_completeHandler);
-			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, loader_errorHandler);
 			loader.load(new URLRequest(path));
 		}
 		
@@ -79,14 +80,12 @@ package jx
 		{
 			var name:String = queue[index];
 			_dictionary[name] = data;
-			destroyLoader();
+			unloadBitmap();
 			loadNext();
 		}
 		
-		private function destroyLoader():void
+		private function unloadBitmap():void
 		{
-			loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, loader_completeHandler);
-			loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, loader_errorHandler);
 			loader.unload();
 		}
 		
@@ -100,6 +99,9 @@ package jx
 			}
 			else
 			{
+				loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, loader_completeHandler);
+				loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, loader_errorHandler);
+				loader = null;
 				processing = false;
 				dispatchEvent(new Event(Event.COMPLETE));
 			}
