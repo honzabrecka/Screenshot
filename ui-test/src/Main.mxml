@@ -17,6 +17,7 @@
 			import tests.jx.LoadQueueTest;
 			import tests.jx.ScreenShotTest;
 			import tests.jx.SquareTest;
+			import tests.jx.UploadPoolTest;
 			
 			private var queue:LoadQueue;
 			
@@ -34,7 +35,7 @@
 				
 				var core:FlexUnitCore = new FlexUnitCore();
 					core.addListener(runner);
-					core.run(ScreenShotTest, LoadQueueTest, SquareTest, FlexButtonTest);
+					core.run(ScreenShotTest, LoadQueueTest, UploadPoolTest, SquareTest, FlexButtonTest);
 			}
 			
 		]]>

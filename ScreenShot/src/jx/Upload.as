@@ -28,32 +28,29 @@ package jx
 	{
 		
 		private var url:String;
-		private var loggerEnabled:Boolean;
+		private var pool:UploadPool;
 		
-		public function Upload(url:String, loggerEnabled:Boolean=false)
+		public function Upload(url:String)
 		{
 			this.url = url;
-			this.loggerEnabled = loggerEnabled;
+			pool = new UploadPool();
 		}
 		
 		public function save(name:String, screenShot:BitmapData):void
 		{
 			var image:ByteArray = convertScreen(screenShot);
+			
 			var request:URLRequest = createRequest(name, image);
-			var loader:URLLoader = new URLLoader()
-				loader.addEventListener(Event.COMPLETE, function(event:Event):void
-				{
-					if (loader.data != "done") log(loader.data);
-				});
-				loader.addEventListener(IOErrorEvent.IO_ERROR, function(event:Event):void
-				{
-					log(event.toString());
-				});
-				loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, function(event:Event):void
-				{
-					log(event.toString());
-				});
+			var loader:URLLoader = pool.getLoader();
+				loader.addEventListener(Event.COMPLETE, loader_eventHandler);
+				loader.addEventListener(IOErrorEvent.IO_ERROR, loader_eventHandler);
+				loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, loader_eventHandler);
 				loader.load(request);
+		}
+		
+		private function convertScreen(screen:BitmapData):ByteArray
+		{
+			return new PNGEncoder().encode(screen);
 		}
 		
 		private function createRequest(name:String, image:ByteArray):URLRequest
@@ -67,17 +64,14 @@ package jx
 			return request;
 		}
 		
-		private function convertScreen(screen:BitmapData):ByteArray
+		private function loader_eventHandler(event:Event):void
 		{
-			return new PNGEncoder().encode(screen);
-		}
-		
-		private function log(message:String):void
-		{
-			if (loggerEnabled)
-			{
-				trace("Uploader:", message);
-			}
+			var loader:URLLoader = URLLoader(event.target);
+				loader.removeEventListener(Event.COMPLETE, loader_eventHandler);
+				loader.removeEventListener(IOErrorEvent.IO_ERROR, loader_eventHandler);
+				loader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, loader_eventHandler);
+			
+			pool.disposeLoader(loader);
 		}
 		
 	}
