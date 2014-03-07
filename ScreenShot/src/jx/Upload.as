@@ -28,12 +28,12 @@ package jx
 	{
 		
 		private var url:String;
-		private var enableLogger:Boolean;
+		private var loggerEnabled:Boolean;
 		
-		public function Upload(url:String, enableLogger:Boolean=false)
+		public function Upload(url:String, loggerEnabled:Boolean=false)
 		{
 			this.url = url;
-			this.enableLogger = enableLogger;
+			this.loggerEnabled = loggerEnabled;
 		}
 		
 		public function save(name:String, screenShot:BitmapData):void
@@ -74,7 +74,7 @@ package jx
 		
 		private function log(message:String):void
 		{
-			if (enableLogger)
+			if (loggerEnabled)
 			{
 				trace("Uploader:", message);
 			}
