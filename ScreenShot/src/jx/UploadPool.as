@@ -27,8 +27,7 @@ package jx
 		
 		public function getLoader():URLLoader
 		{
-			if (loaders.length > 0)
-			{
+			if (loaders.length > 0) {
 				return loaders.pop();
 			}
 			

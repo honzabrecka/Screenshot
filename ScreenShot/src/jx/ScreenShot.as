@@ -41,17 +41,20 @@ package jx
 			var screen:BitmapData = new BitmapData(component.width, component.height);
 				screen.draw(component);
 			
-			if (save)
-			{
+			if (save) {
 				save.save(name + ".png", screen);
 				return true;
 			}
 			
-			if (!dictionary) throw new IllegalOperationError("You have to set the dictionary first.");
+			if (!dictionary) {
+				throw new IllegalOperationError("You have to set the dictionary first.");
+			}
 			
 			var originalScreen:BitmapData = dictionary[name];
 			
-			if (!originalScreen) return false;
+			if (!originalScreen) {
+				return false;
+			}
 			
 			return compareBitmapData(originalScreen, screen);
 		}
@@ -66,12 +69,9 @@ package jx
 			var originalPixels:Vector.<uint> = original.getVector(original.rect);
 			var testPixels:Vector.<uint> = test.getVector(test.rect);
 			
-			if (originalPixels.length == testPixels.length)
-			{
-				for (var i:uint = 0; i < originalPixels.length; i++)
-				{
-					if (originalPixels[i] != testPixels[i])
-					{
+			if (originalPixels.length == testPixels.length) {
+				for (var i:uint = 0; i < originalPixels.length; i++) {
+					if (originalPixels[i] != testPixels[i]) {
 						return false;
 					}
 				}

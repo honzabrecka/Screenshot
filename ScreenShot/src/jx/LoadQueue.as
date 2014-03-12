@@ -41,14 +41,23 @@ package jx
 		
 		public function get dictionary():Object
 		{
-			if (!_dictionary) throw new IllegalOperationError("You have to call load method first.");
+			if (!_dictionary) {
+				throw new IllegalOperationError("You have to call load method first.");
+			}
+			
 			return _dictionary;
 		}
 		
 		public function load(queue:Vector.<String>):void
 		{
-			if (processing) throw new IllegalOperationError("Loading in progress. Wait until it's done.");
-			if (!queue) throw new ArgumentError("Queue can't be empty.");
+			if (processing) {
+				throw new IllegalOperationError("Loading in progress. Wait until it's done.");
+			}
+			
+			if (!queue) {
+				throw new ArgumentError("Queue can't be empty.");
+			}
+			
 			this.queue = queue;
 			
 			loader = new Loader();
@@ -93,12 +102,9 @@ package jx
 		{
 			index++;
 			
-			if (index < queue.length)
-			{
+			if (index < queue.length) {
 				loadBitmap(currentPath);
-			}
-			else
-			{
+			} else {
 				loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, loader_completeHandler);
 				loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, loader_errorHandler);
 				loader = null;
