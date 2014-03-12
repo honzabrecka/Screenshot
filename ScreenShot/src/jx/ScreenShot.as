@@ -42,7 +42,7 @@ package jx
 				screen.draw(component);
 			
 			if (save) {
-				save.save(name + ".png", screen);
+				save.save(name, screen);
 				return true;
 			}
 			

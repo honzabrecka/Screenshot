@@ -138,14 +138,20 @@ package tests.jx
 		}
 		
 		[Test(async)]
+		public function compareInUploadModeReturnsTrue():void
+		{
+			ScreenShot.save = new TestSave();
+			Assert.assertTrue(ScreenShot.compare("Square", square));
+		}
+		
+		[Test(async)]
 		public function upload():void
 		{
 			var uploader:TestSave = new TestSave();
 			ScreenShot.save = uploader;
-			
-			Assert.assertTrue(ScreenShot.compare("Square", square));
+			ScreenShot.compare("Square", square)
 			Assert.assertEquals(1, uploader.saveCalledCount);
-			Assert.assertEquals("Square.png", uploader.name);
+			Assert.assertEquals("Square", uploader.name);
 			Assert.assertNotNull(uploader.screenShot);
 		}
 		

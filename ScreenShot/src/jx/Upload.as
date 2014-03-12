@@ -27,6 +27,8 @@ package jx
 	public class Upload implements Save
 	{
 		
+		public static const EXTENSION:String = ".png";
+		
 		private var url:String;
 		private var pool:UploadPool;
 		
@@ -39,7 +41,6 @@ package jx
 		public function save(name:String, screenShot:BitmapData):void
 		{
 			var image:ByteArray = convertScreen(screenShot);
-			
 			var request:URLRequest = createRequest(name, image);
 			var loader:URLLoader = pool.getLoader();
 				loader.addEventListener(Event.COMPLETE, loader_eventHandler);
@@ -57,7 +58,7 @@ package jx
 		{
 			var request:URLRequest = new URLRequest(url);
 				request.requestHeaders.push(new URLRequestHeader("Content-type", "application/octet-stream"));
-				request.requestHeaders.push(new URLRequestHeader("X-File-Name", name));
+				request.requestHeaders.push(new URLRequestHeader("X-File-Name", name + EXTENSION));
 				request.method = "POST";
 				request.data = image;
 			

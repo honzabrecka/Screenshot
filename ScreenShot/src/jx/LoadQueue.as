@@ -59,38 +59,46 @@ package jx
 			}
 			
 			this.queue = queue;
-			
-			loader = new Loader();
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loader_completeHandler);
-			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, loader_errorHandler);
-			
+			start();
+		}
+		
+		private function start():void
+		{
 			_dictionary = {};
 			index = 0;
 			loading = true;
-			loadBitmap(currentPath);
+			createLoader();
+			loadBitmap();
 		}
 		
-		private function loadBitmap(path:String):void
+		private function createLoader():void
 		{
-			loader.load(new URLRequest(path));
+			loader = new Loader();
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loader_completeHandler);
+			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, loader_errorHandler);
+		}
+		
+		private function destroyLoader():void
+		{
+			loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, loader_completeHandler);
+			loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, loader_errorHandler);
+			loader = null;
 		}
 		
 		private function loader_completeHandler(event:Event):void
 		{
-			loadComplete(Bitmap(loader.content).bitmapData);
+			saveAndLoadNext(Bitmap(loader.content).bitmapData);
 		}
 		
 		private function loader_errorHandler(event:Event):void
 		{
-			loadComplete(null);
+			saveAndLoadNext(null);
 		}
 		
-		private function loadComplete(data:BitmapData):void
+		private function loadBitmap():void
 		{
-			var name:String = queue[index];
-			_dictionary[name] = data;
-			unloadBitmap();
-			loadNext();
+			var file:String = path + queue[index] + Upload.EXTENSION;
+			loader.load(new URLRequest(file));
 		}
 		
 		private function unloadBitmap():void
@@ -98,24 +106,30 @@ package jx
 			loader.unload();
 		}
 		
+		private function saveAndLoadNext(data:BitmapData):void
+		{
+			var name:String = queue[index];
+			_dictionary[name] = data;
+			unloadBitmap();
+			loadNext();
+		}
+		
 		private function loadNext():void
 		{
 			index++;
 			
 			if (index < queue.length) {
-				loadBitmap(currentPath);
+				loadBitmap();
 			} else {
-				loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, loader_completeHandler);
-				loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, loader_errorHandler);
-				loader = null;
-				loading = false;
-				dispatchEvent(new Event(Event.COMPLETE));
+				done();
 			}
 		}
 		
-		private function get currentPath():String
+		private function done():void
 		{
-			return path + queue[index] + ".png";
+			loading = false;
+			destroyLoader();
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 	}
