@@ -30,7 +30,7 @@ package jx
 		private var path:String;
 		private var queue:Vector.<String>;
 		private var _dictionary:Object;
-		private var processing:Boolean = false;
+		private var loading:Boolean = false;
 		private var loader:Loader;
 		private var index:uint;
 		
@@ -50,7 +50,7 @@ package jx
 		
 		public function load(queue:Vector.<String>):void
 		{
-			if (processing) {
+			if (loading) {
 				throw new IllegalOperationError("Loading in progress. Wait until it's done.");
 			}
 			
@@ -66,7 +66,7 @@ package jx
 			
 			_dictionary = {};
 			index = 0;
-			processing = true;
+			loading = true;
 			loadBitmap(currentPath);
 		}
 		
@@ -108,7 +108,7 @@ package jx
 				loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, loader_completeHandler);
 				loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, loader_errorHandler);
 				loader = null;
-				processing = false;
+				loading = false;
 				dispatchEvent(new Event(Event.COMPLETE));
 			}
 		}
