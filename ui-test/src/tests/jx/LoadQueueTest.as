@@ -75,5 +75,12 @@ package tests.jx
 			Assert.assertNull(loader.dictionary["undefinedScreen"]);
 		}
 		
+		[Test(async)]
+		public function completeEventWhenEmptyQueueGiven():void
+		{
+			Async.handleEvent(this, loader, Event.COMPLETE, null);
+			loader.load(new <String>[]);
+		}
+		
 	}
 }

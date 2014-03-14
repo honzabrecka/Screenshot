@@ -58,6 +58,11 @@ package jx
 				throw new ArgumentError("Queue can't be empty.");
 			}
 			
+			if (queue.length == 0) {
+				done();
+				return;
+			}
+			
 			this.queue = queue;
 			start();
 		}
@@ -121,6 +126,7 @@ package jx
 			if (index < queue.length) {
 				loadBitmap();
 			} else {
+				destroyLoader();
 				done();
 			}
 		}
@@ -128,7 +134,6 @@ package jx
 		private function done():void
 		{
 			loading = false;
-			destroyLoader();
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
