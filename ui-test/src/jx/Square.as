@@ -43,8 +43,8 @@ package jx
 		override protected function drawBackground():void
 		{
 			graphics.clear();
-			graphics.beginFill(color, 1);
-			graphics.drawRect(0, 0, 100, 100);
+			graphics.beginFill(color);
+			graphics.drawRect(0, 0, 1, 1);
 			graphics.endFill();
 		}
 		

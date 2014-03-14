@@ -9,15 +9,14 @@
 package tests.jx
 {
 	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	
-	import mx.events.FlexEvent;
 	
 	import flexunit.framework.Assert;
 	
 	import jx.Save;
 	import jx.ScreenShot;
 	import jx.Square;
+	
+	import mx.events.FlexEvent;
 	
 	import org.flexunit.async.Async;
 	import org.fluint.uiImpersonation.UIImpersonator;
@@ -32,22 +31,11 @@ package tests.jx
 	public class ScreenShotTest extends TestCase
 	{
 		
-		[Embed(source="../../../data/a.png")]
-		private static const A:Class;
-		
-		[Embed(source="../../../data/b.png")]
-		private static const B:Class;
-		
-		[Embed(source="../../../data/c.png")]
-		private static const C:Class;
-		
-		[Embed(source="../../../data/Square.png")]
+		[Embed(source="../../../data/SquareTest.defaultColor.png")]
 		private static const SquareScreen:Class;
 		
-		private var a:BitmapData;
-		private var b:BitmapData;
-		private var c:BitmapData;
 		private var square:Square;
+		private var save:TestSave;
 		
 		private static var tempDictionary:Object;
 		private static var tempSaver:Save;
@@ -69,13 +57,14 @@ package tests.jx
 		[Before(async, ui)]
 		public function setUp():void
 		{
-			a = Bitmap(new A()).bitmapData;
-			b = Bitmap(new B()).bitmapData;
-			c = Bitmap(new C()).bitmapData;
 			square = new Square();
+			
+			save = new TestSave();
+			ScreenShot.save = save;
 			
 			ScreenShot.dictionary = {};
 			ScreenShot.dictionary["Square"] = Bitmap(new SquareScreen()).bitmapData;
+			ScreenShot.phase = ScreenShot.COMPARE;
 			
 			Async.proceedOnEvent(this, square, FlexEvent.CREATION_COMPLETE);
 			UIImpersonator.addChild(square);
@@ -84,13 +73,6 @@ package tests.jx
 		[After(async, ui)]
 		public function tearDown():void
 		{
-			a.dispose();
-			a = null;
-			b.dispose();
-			b = null;
-			c.dispose();
-			c = null;
-			
 			ScreenShot.dictionary = null;
 			ScreenShot.save = null;
 			
@@ -99,29 +81,18 @@ package tests.jx
 			square = null;
 		}
 		
-		[Test]
-		public function compareSameBitmapData():void
-		{
-			Assert.assertTrue(ScreenShot.compareBitmapData(a.clone(), a.clone()));
-		}
-		
-		[Test]
-		public function compareBitmapDataWithDifferentSize():void
-		{
-			Assert.assertFalse(ScreenShot.compareBitmapData(b.clone(), c.clone()));
-		}
-		
-		[Test]
-		public function compareBitmapDataWithDifferentColor():void
-		{
-			Assert.assertFalse(ScreenShot.compareBitmapData(a.clone(), b.clone()));
-		}
-		
 		[Test(async, expects="flash.errors.IllegalOperationError")]
 		public function missingDictionary():void
 		{
 			ScreenShot.dictionary = null;
 			ScreenShot.compare("whatever, because dictionary is null...", square);
+		}
+		
+		[Test(async, expects="flash.errors.IllegalOperationError")]
+		public function missingSave():void
+		{
+			ScreenShot.save = null;
+			ScreenShot.compare("whatever, because save is null...", square);
 		}
 		
 		[Test(async)]
@@ -138,22 +109,35 @@ package tests.jx
 		}
 		
 		[Test(async)]
-		public function compareInUploadModeReturnsTrue():void
+		public function compareInCreationPhase():void
 		{
-			ScreenShot.save = new TestSave();
+			ScreenShot.phase = ScreenShot.CREATION;
 			Assert.assertTrue(ScreenShot.compare("Square", square));
+			Assert.assertEquals(2, save.saveCalledCount);
+			Assert.assertEquals("Square", save.name);
+			Assert.assertNotNull(save.screenShot);
 		}
 		
 		[Test(async)]
-		public function upload():void
+		public function saveActual():void
 		{
-			var uploader:TestSave = new TestSave();
-			ScreenShot.save = uploader;
-			ScreenShot.compare("Square", square)
-			Assert.assertEquals(1, uploader.saveCalledCount);
-			Assert.assertEquals("Square", uploader.name);
-			Assert.assertNotNull(uploader.screenShot);
+			Assert.assertTrue(ScreenShot.compare("Square", square));
+			Assert.assertEquals(1, save.saveCalledCount);
+			Assert.assertEquals("Square-actual", save.name);
+			Assert.assertNotNull(save.screenShot);
 		}
+		
+		[Test(async)]
+		public function saveActualAndDiff():void
+		{
+			square.color = 0xffff00;
+			
+			Assert.assertFalse(ScreenShot.compare("Square", square));
+			Assert.assertEquals(2, save.saveCalledCount);
+			Assert.assertEquals("Square-diff", save.name);
+			Assert.assertNotNull(save.screenShot);
+		}
+		
 		
 	}
 }

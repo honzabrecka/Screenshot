@@ -20,8 +20,12 @@ package jx
 	public class ScreenShot
 	{
 		
+		public static const CREATION:uint = 0;
+		public static const COMPARE:uint = 1;
+		
 		public static var dictionary:Object;
 		public static var save:Save;
+		public static var phase:uint = COMPARE;
 		
 		public function ScreenShot()
 		{
@@ -30,16 +34,17 @@ package jx
 		
 		public static function compare(name:String, component:DisplayObject):Boolean
 		{
+			checkPreconditions();
+			
 			var screen:BitmapData = new BitmapData(component.width, component.height);
 				screen.draw(component);
 			
-			if (save) {
+			// for manual compare
+			save.save(name + "-actual", screen);
+			
+			if (phase == CREATION) {
 				save.save(name, screen);
 				return true;
-			}
-			
-			if (!dictionary) {
-				throw new IllegalOperationError("You have to set the dictionary first.");
 			}
 			
 			var originalScreen:BitmapData = dictionary[name];
@@ -48,30 +53,31 @@ package jx
 				return false;
 			}
 			
-			return compareBitmapData(originalScreen, screen);
-		}
-		
-		/**
-		 * Compare two bitmap data, pixel by pixel.
-		 * @return Return true when bitmap data are exactly the same.
-		 */
-		
-		public static function compareBitmapData(original:BitmapData, test:BitmapData):Boolean
-		{
-			var originalPixels:Vector.<uint> = original.getVector(original.rect);
-			var testPixels:Vector.<uint> = test.getVector(test.rect);
+			var diff:Object = originalScreen.compare(screen);
 			
-			if (originalPixels.length == testPixels.length) {
-				for (var i:uint = 0; i < originalPixels.length; i++) {
-					if (originalPixels[i] != testPixels[i]) {
-						return false;
-					}
-				}
-				
+			if (diff == 0) {
+				// same
 				return true;
+			} else if (diff == -3 || diff == -4) {
+				return false;
+			} else if (diff is BitmapData) {
+				// for manual compare (diff)
+				save.save(name + "-diff", BitmapData(diff));
+				return false;
 			}
 			
 			return false;
+		}
+		
+		private static function checkPreconditions():void
+		{
+			if (!dictionary) {
+				throw new IllegalOperationError("You have to set the dictionary first.");
+			}
+			
+			if (!save) {
+				throw new IllegalOperationError("You have to set the save first.");
+			}
 		}
 		
 	}

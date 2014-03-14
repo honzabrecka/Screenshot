@@ -49,7 +49,7 @@ package tests.jx
 		[Test(expects="flash.errors.IllegalOperationError")]
 		public function loadWhileLoading():void
 		{
-			var queue:Vector.<String> = new <String>["a", "b", "c"];
+			var queue:Vector.<String> = new <String>["a", "b"];
 			loader.load(queue);
 			loader.load(queue);
 		}
@@ -65,7 +65,7 @@ package tests.jx
 		{
 			Async.handleEvent(this, loader, Event.COMPLETE, completeEvent_asyncHandler);
 			
-			var queue:Vector.<String> = new <String>["a", "b", "c"];
+			var queue:Vector.<String> = new <String>["a", "b"];
 			loader.load(queue);
 		}
 		
