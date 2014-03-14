@@ -6,7 +6,7 @@
 	<fx:Script>
 		<![CDATA[
 			import jx.LoadQueue;
-			import jx.ScreenShot;
+			import jx.Screenshot;
 			import jx.Upload;
 			
 			import mx.events.FlexEvent;
@@ -15,7 +15,7 @@
 			
 			import tests.jx.FlexButtonTest;
 			import tests.jx.LoadQueueTest;
-			import tests.jx.ScreenShotTest;
+			import tests.jx.ScreenshotTest;
 			import tests.jx.SquareTest;
 			import tests.jx.UploadPoolTest;
 			
@@ -30,13 +30,13 @@
 			
 			private function screenLoader_completeHandler(event:Event):void
 			{
-				ScreenShot.save = new Upload("http://localhost/upload/ui-test.php");
-				ScreenShot.dictionary = queue.dictionary;
-				//ScreenShot.phase = ScreenShot.CREATION;
+				Screenshot.save = new Upload("http://localhost/upload/ui-test.php");
+				Screenshot.dictionary = queue.dictionary;
+				//Screenshot.phase = Screenshot.CREATION;
 				
 				var core:FlexUnitCore = new FlexUnitCore();
 					core.addListener(runner);
-					core.run(ScreenShotTest, LoadQueueTest, UploadPoolTest, SquareTest, FlexButtonTest);
+					core.run(ScreenshotTest, LoadQueueTest, UploadPoolTest, SquareTest, FlexButtonTest);
 			}
 			
 		]]>

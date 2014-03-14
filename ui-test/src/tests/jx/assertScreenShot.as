@@ -12,7 +12,7 @@ package tests.jx
 	
 	import flexunit.framework.Assert;
 	
-	import jx.ScreenShot;
+	import jx.Screenshot;
 	
 	/**
 	 * Component with its screen shot assertion helper
@@ -21,9 +21,9 @@ package tests.jx
 	 * @langversion 3.0
 	 */
 	
-	public function assertScreenShot(screenShotName:String, displayObject:DisplayObject):void
+	public function assertScreenshot(screenShotName:String, displayObject:DisplayObject):void
 	{
-		Assert.assertTrue(ScreenShot.compare(screenShotName, displayObject));
+		Assert.assertTrue(Screenshot.compare(screenShotName, displayObject));
 	}
 	
 }

@@ -50,7 +50,7 @@ package tests.jx
 		{
 			
 			Assert.assertEquals(0x000000, component.color);
-			assertScreenShot("SquareTest.defaultColor", component);
+			assertScreenshot("SquareTest.defaultColor", component);
 		}
 		
 		[Test(async)]
@@ -58,7 +58,7 @@ package tests.jx
 		{
 			component.color = 0xFF0000;
 			Assert.assertEquals(0xFF0000, component.color);
-			assertScreenShot("SquareTest.changedColor", component);
+			assertScreenshot("SquareTest.changedColor", component);
 		}
 		
 	}

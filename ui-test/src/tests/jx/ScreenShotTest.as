@@ -13,7 +13,7 @@ package tests.jx
 	import flexunit.framework.Assert;
 	
 	import jx.Save;
-	import jx.ScreenShot;
+	import jx.Screenshot;
 	import jx.Square;
 	
 	import mx.events.FlexEvent;
@@ -28,7 +28,7 @@ package tests.jx
 	 * @langversion 3.0
 	 */
 	
-	public class ScreenShotTest extends TestCase
+	public class ScreenshotTest extends TestCase
 	{
 		
 		[Embed(source="../../../data/SquareTest.defaultColor.png")]
@@ -43,15 +43,15 @@ package tests.jx
 		[BeforeClass]
 		public static function setUpClass():void
 		{
-			tempDictionary = ScreenShot.dictionary;
-			tempSaver = ScreenShot.save;
+			tempDictionary = Screenshot.dictionary;
+			tempSaver = Screenshot.save;
 		}
 		
 		[AfterClass]
 		public static function tearDownClass():void
 		{
-			ScreenShot.dictionary = tempDictionary;
-			ScreenShot.save = tempSaver;
+			Screenshot.dictionary = tempDictionary;
+			Screenshot.save = tempSaver;
 		}
 		
 		[Before(async, ui)]
@@ -60,11 +60,11 @@ package tests.jx
 			square = new Square();
 			
 			save = new TestSave();
-			ScreenShot.save = save;
+			Screenshot.save = save;
 			
-			ScreenShot.dictionary = {};
-			ScreenShot.dictionary["Square"] = Bitmap(new SquareScreen()).bitmapData;
-			ScreenShot.phase = ScreenShot.COMPARE;
+			Screenshot.dictionary = {};
+			Screenshot.dictionary["Square"] = Bitmap(new SquareScreen()).bitmapData;
+			Screenshot.phase = Screenshot.COMPARE;
 			
 			Async.proceedOnEvent(this, square, FlexEvent.CREATION_COMPLETE);
 			UIImpersonator.addChild(square);
@@ -73,8 +73,8 @@ package tests.jx
 		[After(async, ui)]
 		public function tearDown():void
 		{
-			ScreenShot.dictionary = null;
-			ScreenShot.save = null;
+			Screenshot.dictionary = null;
+			Screenshot.save = null;
 			
 			UIImpersonator.removeChild(square);
 			square.clear();
@@ -84,35 +84,35 @@ package tests.jx
 		[Test(async, expects="flash.errors.IllegalOperationError")]
 		public function missingDictionary():void
 		{
-			ScreenShot.dictionary = null;
-			ScreenShot.compare("whatever, because dictionary is null...", square);
+			Screenshot.dictionary = null;
+			Screenshot.compare("whatever, because dictionary is null...", square);
 		}
 		
 		[Test(async, expects="flash.errors.IllegalOperationError")]
 		public function missingSave():void
 		{
-			ScreenShot.save = null;
-			ScreenShot.compare("whatever, because save is null...", square);
+			Screenshot.save = null;
+			Screenshot.compare("whatever, because save is null...", square);
 		}
 		
 		[Test(async)]
 		public function compareGood():void
 		{
-			Assert.assertTrue(ScreenShot.compare("Square", square));
+			Assert.assertTrue(Screenshot.compare("Square", square));
 		}
 		
 		[Test(async)]
 		public function compareBad():void
 		{
 			square.color = 0x0000ff;
-			Assert.assertFalse(ScreenShot.compare("Square", square));
+			Assert.assertFalse(Screenshot.compare("Square", square));
 		}
 		
 		[Test(async)]
 		public function compareInCreationPhase():void
 		{
-			ScreenShot.phase = ScreenShot.CREATION;
-			Assert.assertTrue(ScreenShot.compare("Square", square));
+			Screenshot.phase = Screenshot.CREATION;
+			Assert.assertTrue(Screenshot.compare("Square", square));
 			Assert.assertEquals(2, save.saveCalledCount);
 			Assert.assertEquals("Square", save.name);
 			Assert.assertNotNull(save.screenShot);
@@ -121,7 +121,7 @@ package tests.jx
 		[Test(async)]
 		public function saveActual():void
 		{
-			Assert.assertTrue(ScreenShot.compare("Square", square));
+			Assert.assertTrue(Screenshot.compare("Square", square));
 			Assert.assertEquals(1, save.saveCalledCount);
 			Assert.assertEquals("Square-actual", save.name);
 			Assert.assertNotNull(save.screenShot);
@@ -132,7 +132,7 @@ package tests.jx
 		{
 			square.color = 0xffff00;
 			
-			Assert.assertFalse(ScreenShot.compare("Square", square));
+			Assert.assertFalse(Screenshot.compare("Square", square));
 			Assert.assertEquals(2, save.saveCalledCount);
 			Assert.assertEquals("Square-diff", save.name);
 			Assert.assertNotNull(save.screenShot);

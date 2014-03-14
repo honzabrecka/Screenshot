@@ -17,7 +17,7 @@ package jx
 	 * @langversion 3.0
 	 */
 	
-	public class ScreenShot
+	public class Screenshot
 	{
 		
 		public static const CREATION:uint = 0;
@@ -27,7 +27,7 @@ package jx
 		public static var save:Save;
 		public static var phase:uint = COMPARE;
 		
-		public function ScreenShot()
+		public function Screenshot()
 		{
 			throw new IllegalOperationError("Can't be instantiated.");
 		}

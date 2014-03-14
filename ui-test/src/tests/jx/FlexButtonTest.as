@@ -53,7 +53,7 @@ package tests.jx
 			
 			waitToTest(function(event:Event, data:Object):void
 			{
-				assertScreenShot("FlexButtonTest.labelAndSize", button);
+				assertScreenshot("FlexButtonTest.labelAndSize", button);
 			});
 		}
 		
