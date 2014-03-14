@@ -60,6 +60,8 @@ So (I intentionally use singular):
 
 How you can see, it's simple and easy to use.
 
+> `Screenshot` has another one property called `comparer`. If you aren't satisfied with default `NativeComparer`, you can write your own `Comparer`.
+
 ## Known issues
 
 Sometimes you can see "Adobe Flash Player has stopped a potentially unsafe operation." error message when you run your test suite. To solve this, just add the swf file location to the trusted list in Adobe FlashPlayer Settings Manager in order to allow a local swf connect the internet.
