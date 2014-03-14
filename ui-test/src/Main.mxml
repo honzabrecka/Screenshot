@@ -5,19 +5,19 @@
 			   creationComplete="creationCompleteHandler(event)">
 	<fx:Script>
 		<![CDATA[
-			import jx.LoadQueue;
-			import jx.Screenshot;
-			import jx.Upload;
+			import com.jx.screenshot.LoadQueue;
+			import com.jx.screenshot.Screenshot;
+			import com.jx.screenshot.Upload;
 			
 			import mx.events.FlexEvent;
 			
 			import org.flexunit.runner.FlexUnitCore;
 			
 			import tests.jx.FlexButtonTest;
-			import tests.jx.LoadQueueTest;
-			import tests.jx.ScreenshotTest;
+			import tests.com.jx.screenshot.LoadQueueTest;
+			import tests.com.jx.screenshot.ScreenshotTest;
 			import tests.jx.SquareTest;
-			import tests.jx.UploadPoolTest;
+			import tests.com.jx.screenshot.UploadPoolTest;
 			
 			private var queue:LoadQueue;
 			

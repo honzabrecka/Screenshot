@@ -6,14 +6,14 @@
  in accordance with the terms of the accompanying license agreement.
 */
 
-package tests.jx
+package tests.com.jx.screenshot
 {
 	import flash.display.Bitmap;
 	
 	import flexunit.framework.Assert;
 	
-	import jx.Save;
-	import jx.Screenshot;
+	import com.jx.screenshot.Save;
+	import com.jx.screenshot.Screenshot;
 	import jx.Square;
 	
 	import mx.events.FlexEvent;
@@ -31,7 +31,7 @@ package tests.jx
 	public class ScreenshotTest extends TestCase
 	{
 		
-		[Embed(source="../../../data/SquareTest.defaultColor.png")]
+		[Embed(source="../../../../../data/SquareTest.defaultColor.png")]
 		private static const SquareScreen:Class;
 		
 		private var square:Square;

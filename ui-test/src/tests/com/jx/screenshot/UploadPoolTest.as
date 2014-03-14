@@ -6,13 +6,13 @@
  in accordance with the terms of the accompanying license agreement.
 */
 
-package tests.jx
+package tests.com.jx.screenshot
 {
 	import flash.net.URLLoader;
 	
 	import flexunit.framework.Assert;
 	
-	import jx.UploadPool;
+	import com.jx.screenshot.UploadPool;
 	
 	import tests.TestCase;
 	

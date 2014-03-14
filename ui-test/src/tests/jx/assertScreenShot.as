@@ -12,7 +12,7 @@ package tests.jx
 	
 	import flexunit.framework.Assert;
 	
-	import jx.Screenshot;
+	import com.jx.screenshot.Screenshot;
 	
 	/**
 	 * Component with its screen shot assertion helper

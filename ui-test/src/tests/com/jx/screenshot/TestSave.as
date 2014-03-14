@@ -6,11 +6,11 @@
  in accordance with the terms of the accompanying license agreement.
 */
 
-package tests.jx
+package tests.com.jx.screenshot
 {
 	import flash.display.BitmapData;
 	
-	import jx.Save;
+	import com.jx.screenshot.Save;
 	
 	/**
 	 * @author Jan Břečka

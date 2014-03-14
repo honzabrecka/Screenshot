@@ -6,7 +6,7 @@
  in accordance with the terms of the accompanying license agreement.
 */
 
-package jx
+package com.jx.screenshot
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;

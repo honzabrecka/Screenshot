@@ -6,14 +6,14 @@
  in accordance with the terms of the accompanying license agreement.
 */
 
-package tests.jx
+package tests.com.jx.screenshot
 {
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	
 	import flexunit.framework.Assert;
 	
-	import jx.LoadQueue;
+	import com.jx.screenshot.LoadQueue;
 	
 	import org.flexunit.async.Async;
 	import tests.TestCase;
