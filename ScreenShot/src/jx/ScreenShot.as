@@ -28,14 +28,6 @@ package jx
 			throw new IllegalOperationError("Can't be instantiated.");
 		}
 		
-		/**
-		 * Compare screen shot with component.
-		 * 
-		 * <p>Before use this method you have to set <code>screenLoader</code> property.</p>
-		 * 
-		 * @return Return true when the component looks exactly the same as is on screen shot.
-		 */
-		
 		public static function compare(name:String, component:DisplayObject):Boolean
 		{
 			var screen:BitmapData = new BitmapData(component.width, component.height);
