@@ -8,15 +8,15 @@
 
 package tests.com.jx.screenshot
 {
+	import com.jx.screenshot.Save;
+	import com.jx.screenshot.Screenshot;
+	
 	import flash.display.Bitmap;
+	import flash.events.Event;
 	
 	import flexunit.framework.Assert;
 	
-	import com.jx.screenshot.Save;
-	import com.jx.screenshot.Screenshot;
 	import jx.Square;
-	
-	import mx.events.FlexEvent;
 	
 	import org.flexunit.async.Async;
 	import org.fluint.uiImpersonation.UIImpersonator;
@@ -66,7 +66,7 @@ package tests.com.jx.screenshot
 			Screenshot.dictionary["Square"] = Bitmap(new SquareScreen()).bitmapData;
 			Screenshot.phase = Screenshot.COMPARE;
 			
-			Async.proceedOnEvent(this, square, FlexEvent.CREATION_COMPLETE);
+			Async.proceedOnEvent(this, square, Event.ADDED);
 			UIImpersonator.addChild(square);
 		}
 		
@@ -77,7 +77,6 @@ package tests.com.jx.screenshot
 			Screenshot.save = null;
 			
 			UIImpersonator.removeChild(square);
-			square.clear();
 			square = null;
 		}
 		

@@ -8,7 +8,7 @@
 
 package tests.jx
 {
-	import mx.events.FlexEvent;
+	import flash.events.Event;
 	
 	import flexunit.framework.Assert;
 	
@@ -33,14 +33,13 @@ package tests.jx
 		public function setUp():void
 		{
 			component = new Square();
-			Async.proceedOnEvent(this, component, FlexEvent.CREATION_COMPLETE);
+			Async.proceedOnEvent(this, component, Event.ADDED);
 			UIImpersonator.addChild(component);
 		}
 		
 		[After(async, ui)]
 		public function tearDown():void
 		{
-			component.clear();
 			UIImpersonator.removeChild(component);
 			component = null;
 		}
@@ -48,7 +47,6 @@ package tests.jx
 		[Test(async)]
 		public function defaultColor():void
 		{
-			
 			Assert.assertEquals(0x000000, component.color);
 			assertScreenshot("SquareTest.defaultColor", component);
 		}

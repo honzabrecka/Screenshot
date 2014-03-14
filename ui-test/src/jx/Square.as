@@ -8,22 +8,24 @@
 
 package jx
 {
+	import flash.display.Sprite;
+	import flash.events.Event;
 	
 	/**
 	 * @author Jan Břečka
 	 * @langversion 3.0
 	 */
 	
-	public class Square extends UIComponent
+	public class Square extends Sprite
 	{
+		
+		private var _color:uint = 0;
 		
 		public function Square()
 		{
 			super();
+			addEventListener(Event.ADDED, addedHandler);
 		}
-		
-		private var _color:uint = 0;
-		private var colorChanged:Boolean = false;
 		
 		public function get color():uint
 		{
@@ -32,34 +34,24 @@ package jx
 		
 		public function set color(value:uint):void
 		{
-			if (value != _color)
-			{
-				_color = value;
-				colorChanged = true;
-				invalidateDisplayList();
-			}
+			if (value == _color) return;
+			
+			_color = value;
+			draw();
 		}
 		
-		override protected function drawBackground():void
+		private function addedHandler(event:Event):void
+		{
+			removeEventListener(Event.ADDED, addedHandler);
+			draw();
+		}
+		
+		private function draw():void
 		{
 			graphics.clear();
 			graphics.beginFill(color);
 			graphics.drawRect(0, 0, 1, 1);
 			graphics.endFill();
-		}
-		
-		override protected function invalidateDisplayList():void
-		{
-			super.invalidateDisplayList();
-			
-			if (childrenCreated)
-			{
-				if (colorChanged)
-				{
-					colorChanged = false;
-					drawBackground();
-				}
-			}
 		}
 		
 	}
