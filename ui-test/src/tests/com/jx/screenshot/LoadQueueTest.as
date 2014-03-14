@@ -1,5 +1,5 @@
 /*
- ScreenShot util for integration testing of ui components
+ Screenshot util for integration testing of ui components
  Copyright 2013 Jan Břečka. All Rights Reserved.
 
  This program is free software. You can redistribute and/or modify it
