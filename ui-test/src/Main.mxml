@@ -13,11 +13,12 @@
 			
 			import org.flexunit.runner.FlexUnitCore;
 			
-			import tests.jx.FlexButtonTest;
 			import tests.com.jx.screenshot.LoadQueueTest;
+			import tests.com.jx.screenshot.NativeComparerTest;
 			import tests.com.jx.screenshot.ScreenshotTest;
-			import tests.jx.SquareTest;
 			import tests.com.jx.screenshot.UploadPoolTest;
+			import tests.jx.FlexButtonTest;
+			import tests.jx.SquareTest;
 			
 			private var queue:LoadQueue;
 			
@@ -36,7 +37,7 @@
 				
 				var core:FlexUnitCore = new FlexUnitCore();
 					core.addListener(runner);
-					core.run(ScreenshotTest, LoadQueueTest, UploadPoolTest, SquareTest, FlexButtonTest);
+					core.run(ScreenshotTest, LoadQueueTest, UploadPoolTest, NativeComparerTest, SquareTest, FlexButtonTest);
 			}
 			
 		]]>

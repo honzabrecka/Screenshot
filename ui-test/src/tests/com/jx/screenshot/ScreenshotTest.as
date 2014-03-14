@@ -126,17 +126,5 @@ package tests.com.jx.screenshot
 			Assert.assertNotNull(save.screenShot);
 		}
 		
-		[Test(async)]
-		public function saveActualAndDiff():void
-		{
-			square.color = 0xffff00;
-			
-			Assert.assertFalse(Screenshot.compare("Square", square));
-			Assert.assertEquals(2, save.saveCalledCount);
-			Assert.assertEquals("Square-diff", save.name);
-			Assert.assertNotNull(save.screenShot);
-		}
-		
-		
 	}
 }

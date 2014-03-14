@@ -25,6 +25,7 @@ package com.jx.screenshot
 		
 		public static var dictionary:Object;
 		public static var save:Save;
+		public static var comparer:Comparer;
 		public static var phase:uint = COMPARE;
 		
 		public function Screenshot()
@@ -35,6 +36,7 @@ package com.jx.screenshot
 		public static function compare(name:String, component:DisplayObject):Boolean
 		{
 			checkPreconditions();
+			comparer = comparer || new NativeComparer(save);
 			
 			var screen:BitmapData = new BitmapData(component.width, component.height);
 				screen.draw(component);
@@ -49,24 +51,7 @@ package com.jx.screenshot
 			
 			var originalScreen:BitmapData = dictionary[name];
 			
-			if (!originalScreen) {
-				return false;
-			}
-			
-			var diff:Object = originalScreen.compare(screen);
-			
-			if (diff == 0) {
-				// same
-				return true;
-			} else if (diff == -3 || diff == -4) {
-				return false;
-			} else if (diff is BitmapData) {
-				// for manual compare (diff)
-				save.save(name + "-diff", BitmapData(diff));
-				return false;
-			}
-			
-			return false;
+			return comparer.compare(name, originalScreen, screen);
 		}
 		
 		private static function checkPreconditions():void
