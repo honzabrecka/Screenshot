@@ -26,8 +26,8 @@ At first of all you have to set `ScreenShot.dictionary` property, which is simpl
 [Embed(source="SquareTest.defaultColor.png")]
 private var SquareWithDefaultColor:Class;
 ...
-ScreenShot.dictionary = {};
-ScreenShot.dictionary["SquareTest.defaultColor"] = Bitmap(new SquareWithDefaultColor()).bitmapData;
+Screenshot.dictionary = {};
+Screenshot.dictionary["SquareTest.defaultColor"] = Bitmap(new SquareWithDefaultColor()).bitmapData;
 ```
 or, which is much better and prefered way, use the default `LoadQueue` class, which loads screenshots at runtime and forwards its dictionary to `Screenshot.dictionary`:
 
