@@ -54,7 +54,7 @@ Finally we have to choose the `Screenshot.phase`. The default one is `Screenshot
 
 So (I intentionally use singular):
 
-`Screenshot.CREATION` phase generates screenshot from your tested component and save it to server. You have to check this screenshot and if it looks as you wich, mark it as pattern.
+`Screenshot.CREATION` phase generates screenshot from your tested component and save it to server. You have to check this screenshot and if it looks as you wish, mark it as pattern.
 
 `Screenshot.COMPARE` phase loads screenshot (pattern) and compares actual look of component with it.
 
