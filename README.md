@@ -3,7 +3,8 @@ Screenshot
 
 Screenshot is the ActionScript 3 util for integration testing of ui components. It perfectly works with FlexUnit testing flow and Flex Framework ui components.
 
-## Fast, lightweight and easy to use
+Fast, lightweight and easy to use
+---------------------------------
 
 ```as3
 [Test(async, ui)]
@@ -18,7 +19,8 @@ public function defaultColor():void
 }
 ```
 
-## Setup
+Setup
+-----
 
 At first of all you have to set `ScreenShot.dictionary` property, which is simple key value storage. It includes patterns (generated screenshots), that are compared with your ui component created at runtime. You can create it manually:
 
@@ -62,11 +64,13 @@ How you can see, it's simple and easy to use.
 
 > `Screenshot` has another one property called `comparer`. If you aren't satisfied with default `NativeComparer`, you can write your own `Comparer`.
 
-## Known issues
+Known issues
+------------
 
 Sometimes you can see "Adobe Flash Player has stopped a potentially unsafe operation." error message when you run your test suite. To solve this, just add the swf file location to the trusted list in Adobe FlashPlayer Settings Manager in order to allow a local swf connect the internet.
 
-## Best practices
+Best practices
+--------------
 
 ### Naming
 
