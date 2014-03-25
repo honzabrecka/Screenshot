@@ -8,6 +8,7 @@
 
 package tests.com.jx.screenshot
 {
+	import com.jx.screenshot.Comparer;
 	import com.jx.screenshot.Save;
 	import com.jx.screenshot.Screenshot;
 	
@@ -39,12 +40,14 @@ package tests.com.jx.screenshot
 		
 		private static var tempDictionary:Object;
 		private static var tempSaver:Save;
+		private static var tempComparer:Comparer;
 		
 		[BeforeClass]
 		public static function setUpClass():void
 		{
 			tempDictionary = Screenshot.dictionary;
 			tempSaver = Screenshot.save;
+			tempComparer = Screenshot.comparer;
 		}
 		
 		[AfterClass]
@@ -52,6 +55,7 @@ package tests.com.jx.screenshot
 		{
 			Screenshot.dictionary = tempDictionary;
 			Screenshot.save = tempSaver;
+			Screenshot.comparer = tempComparer;
 		}
 		
 		[Before(async, ui)]
