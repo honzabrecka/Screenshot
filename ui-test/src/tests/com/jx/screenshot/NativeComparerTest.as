@@ -76,6 +76,7 @@ package tests.com.jx.screenshot
 			var actual:BitmapData = new BitmapData(1, 1, true, 0xff0000);
 			Assert.assertFalse(comparer.compare("", original, actual));
 			Assert.assertEquals(1, save.saveCalledCount);
+			Assert.assertEquals("-diff", save.name);
 			Assert.assertEquals(0xffffff, save.screenShot.getPixel(0, 0));
 		}
 		

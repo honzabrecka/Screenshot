@@ -39,7 +39,6 @@ package com.jx.screenshot
 			} else if (diff is BitmapData) {
 				// for manual compare (diff)
 				save.save(name + "-diff", BitmapData(diff));
-				return false;
 			}
 			
 			return false;
