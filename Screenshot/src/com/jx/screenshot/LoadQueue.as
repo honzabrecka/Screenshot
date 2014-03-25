@@ -30,7 +30,6 @@ package com.jx.screenshot
 		private var path:String;
 		private var queue:Vector.<String>;
 		private var _dictionary:Object;
-		private var loading:Boolean = false;
 		private var loader:Loader;
 		private var index:uint;
 		
@@ -48,30 +47,40 @@ package com.jx.screenshot
 			return _dictionary;
 		}
 		
-		public function load(queue:Vector.<String>):void
+		public function load(screenshots:Vector.<String>):void
 		{
-			if (loading) {
-				throw new IllegalOperationError("Loading in progress. Wait until it's done.");
+			if (!screenshots) {
+				throw new ArgumentError("Screenshots argument can't be null.");
 			}
 			
 			if (!queue) {
-				throw new ArgumentError("Queue can't be empty.");
+				queue = new Vector.<String>();
 			}
+			
+			merge(screenshots);
 			
 			if (queue.length == 0) {
 				done();
-				return;
+			} else if (!loader) {
+				start();
 			}
+		}
+		
+		private function merge(screenshots:Vector.<String>):void
+		{
+			var screenshotsLength:uint = screenshots.length;
 			
-			this.queue = queue;
-			start();
+			for (var i:uint = 0; i < screenshotsLength; i++) {
+				if (queue.indexOf(screenshots[i]) == -1) {
+					queue.push(screenshots[i]);
+				}
+			}
 		}
 		
 		private function start():void
 		{
 			_dictionary = {};
 			index = 0;
-			loading = true;
 			createLoader();
 			loadBitmap();
 		}
@@ -133,7 +142,7 @@ package com.jx.screenshot
 		
 		private function done():void
 		{
-			loading = false;
+			queue = null;
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		

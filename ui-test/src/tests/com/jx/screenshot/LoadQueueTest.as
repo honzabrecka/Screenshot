@@ -26,60 +26,64 @@ package tests.com.jx.screenshot
 	public class LoadQueueTest extends TestCase
 	{
 		
-		private var loader:LoadQueue;
+		private var queue:LoadQueue;
 		
 		[Before]
 		public function setUp():void
 		{
-			loader = new LoadQueue("../data/");
+			queue = new LoadQueue("../data/");
 		}
 		
 		[After]
 		public function tearDown():void
 		{
-			loader = null;
+			queue = null;
 		}
 		
 		[Test(expects="ArgumentError")]
 		public function emptyQueueArgument():void
 		{
-			loader.load(null);
+			queue.load(null);
 		}
 		
-		[Test(expects="flash.errors.IllegalOperationError")]
-		public function loadWhileLoading():void
+		[Test(async)]
+		public function multipleLoads():void
 		{
-			var queue:Vector.<String> = new <String>["a", "b"];
-			loader.load(queue);
-			loader.load(queue);
+			Async.handleEvent(this, queue, Event.COMPLETE, multipleLoads_asyncHandler);
+			queue.load(new <String>["a"]);
+			queue.load(new <String>["a", "b"]);
+		}
+		
+		private function multipleLoads_asyncHandler(event:Event, data:Object):void
+		{
+			Assert.assertTrue(queue.dictionary["a"]);
+			Assert.assertTrue(queue.dictionary["b"]);
 		}
 		
 		[Test(expects="flash.errors.IllegalOperationError")]
 		public function getFromNonready():void
 		{
-			loader.dictionary;
+			queue.dictionary;
 		}
 		
 		[Test(async)]
 		public function completeEvent():void
 		{
-			Async.handleEvent(this, loader, Event.COMPLETE, completeEvent_asyncHandler);
-			
-			var queue:Vector.<String> = new <String>["a", "b"];
-			loader.load(queue);
+			Async.handleEvent(this, queue, Event.COMPLETE, completeEvent_asyncHandler);
+			queue.load(new <String>["a", "b"]);
 		}
 		
 		private function completeEvent_asyncHandler(event:Event, data:Object):void
 		{
-			Assert.assertTrue(loader.dictionary["a"] is BitmapData);
-			Assert.assertNull(loader.dictionary["undefinedScreen"]);
+			Assert.assertTrue(queue.dictionary["a"] is BitmapData);
+			Assert.assertNull(queue.dictionary["undefinedScreen"]);
 		}
 		
 		[Test(async)]
 		public function completeEventWhenEmptyQueueGiven():void
 		{
-			Async.handleEvent(this, loader, Event.COMPLETE, null);
-			loader.load(new <String>[]);
+			Async.handleEvent(this, queue, Event.COMPLETE, null);
+			queue.load(new <String>[]);
 		}
 		
 	}
