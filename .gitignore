@@ -14,15 +14,6 @@ html-template/
 # Mac OS
 *.DS_Store
 
-workerswfs/
-
-!src/tests/
-
-
-# Glogster
-DEPLOY/
-TESTS/*
-DEBUG/
-
-# spritesheet
-*assetsSpritesheet.*
+# Screenshot
+*-actual.png
+*-diff.png
