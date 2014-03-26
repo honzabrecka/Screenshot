@@ -27,15 +27,15 @@ package com.jx.screenshot
 	public class LoadQueue extends EventDispatcher
 	{
 		
-		private var path:String;
+		private var fixturesLocation:String;
 		private var queue:Vector.<String>;
 		private var _dictionary:Object;
 		private var loader:Loader;
 		private var index:uint;
 		
-		public function LoadQueue(path:String)
+		public function LoadQueue(fixturesLocation:String)
 		{
-			this.path = path;
+			this.fixturesLocation = fixturesLocation;
 		}
 		
 		public function get dictionary():Object
@@ -111,7 +111,7 @@ package com.jx.screenshot
 		
 		private function loadBitmap():void
 		{
-			var file:String = path + queue[index] + Upload.EXTENSION;
+			var file:String = fixturesLocation + queue[index] + Upload.EXTENSION;
 			loader.load(new URLRequest(file));
 		}
 		

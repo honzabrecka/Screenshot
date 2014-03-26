@@ -24,7 +24,7 @@
 			
 			private function creationCompleteHandler(event:FlexEvent):void
 			{
-				queue = new LoadQueue("../data/");
+				queue = new LoadQueue("../fixtures/");
 				queue.addEventListener(Event.COMPLETE, screenLoader_completeHandler);
 				queue.load(new <String>["SquareTest.defaultColor", "SquareTest.changedColor", "FlexButtonTest.labelAndSize"]);
 			}

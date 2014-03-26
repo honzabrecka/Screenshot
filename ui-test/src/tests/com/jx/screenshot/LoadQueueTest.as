@@ -31,7 +31,7 @@ package tests.com.jx.screenshot
 		[Before]
 		public function setUp():void
 		{
-			queue = new LoadQueue("../data/");
+			queue = new LoadQueue("../fixtures/");
 		}
 		
 		[After]

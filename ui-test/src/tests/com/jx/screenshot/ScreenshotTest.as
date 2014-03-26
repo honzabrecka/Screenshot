@@ -32,7 +32,7 @@ package tests.com.jx.screenshot
 	public class ScreenshotTest extends TestCase
 	{
 		
-		[Embed(source="../../../../../data/SquareTest.defaultColor.png")]
+		[Embed(source="../../../../../fixtures/SquareTest.defaultColor.png")]
 		private static const SquareScreen:Class;
 		
 		private var square:Square;
