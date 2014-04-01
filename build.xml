@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<project name="Screenshot" default="main">
+    
+    <target name="main"
+        depends="clean, compileScreenshot"/>
+
+    <condition value="${jworkspace}"
+        property="WORKSPACE.dir"
+        else="D:/Screenshot">
+        <isset property="jworkspace"/>
+    </condition>
+    <condition value="${jflexsdk}"
+        property="FLEX_SDK.dir"
+        else="D:/sdks/flex/4.6.0">
+        <isset property="jflexsdk"/>
+    </condition>
+    <condition value="${jflexfpv}"
+        property="FLEX_SDK.fpv"
+        else="11.4">
+        <isset property="jflexfpv"/>
+    </condition>
+    <condition value="${jflexswfv}"
+        property="FLEX_SDK.swfv"
+        else="17">
+        <isset property="jflexswfv"/>
+    </condition>
+    <condition value="${jflexunit}"
+        property="FLEXUNIT.dir"
+        else="D:/sdks/flexunit">
+        <isset property="jflexunit"/>
+    </condition>
+    <condition value="${jflashplayer}"
+        property="FLEX_SDK.fp"
+        else="D:/sdks/flex/4.6.0/runtimes/player/11.4/win/FlashPlayerDebugger.exe">
+        <isset property="jflashplayer"/>
+    </condition>
+    <condition value="${jtestsheadless}"
+        property="HEADLESS.enabled"
+        else="false">
+        <isset property="jtestsheadless"/>
+    </condition>
+    <condition value="${jfork}"
+        property="FORK.enabled"
+        else="true">
+        <isset property="jfork"/>
+    </condition>
+
+    <property name="OUTPUT.dir" value="${WORKSPACE.dir}"/>
+    <property name="FLEX_HOME" value="${FLEX_SDK.dir}"/>
+    <property name="FLEX_SDK.ant" value="${FLEX_SDK.dir}/ant/lib/flexTasks.jar"/>
+
+    <property name="Screenshot.dir" value="${WORKSPACE.dir}/Screenshot"/>
+
+    <property name="DEPLOY.dir" value="${OUTPUT.dir}/DEPLOY"/>
+    <property name="DEPLOY.debug" value="false"/>
+    <property name="DEPLOY.warnings" value="false"/>
+
+    <taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
+
+    <target name="clean">
+        <echo>clean</echo>
+        <delete dir="${DEPLOY.dir}"/>
+        <mkdir dir="${DEPLOY.dir}"/>
+    </target>
+
+    <target name="compileScreenshot">
+        <compc output="${DEPLOY.dir}/Screenshot.swc" failonerror="true"
+            debug="${DEPLOY.debug}"
+            warnings="${DEPLOY.warnings}"
+            optimize="true"
+            target-player="${FLEX_SDK.fpv}"
+            swf-version="${FLEX_SDK.swfv}"
+            dump-config="${DEPLOY.dir}/config_screenshot.xml"
+            size-report="${DEPLOY.dir}/sizereport_screenshot.xml"
+            link-report="${DEPLOY.dir}/linkreport_screenshot.xml"
+            fork="${FORK.enabled}"
+            headless-server="${HEADLESS.enabled}"
+            maxmemory="1024m">
+            <source-path path-element="${Screenshot.dir}/src"/>
+            <include-sources dir="${Screenshot.dir}/src" includes="*"/>
+        </compc>
+    </target>
+
+</project>

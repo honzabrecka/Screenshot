@@ -17,3 +17,6 @@ html-template/
 # Screenshot
 *-actual.png
 *-diff.png
+
+# ant
+DEPLOY/
