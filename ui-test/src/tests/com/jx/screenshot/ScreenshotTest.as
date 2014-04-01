@@ -74,7 +74,7 @@ package tests.com.jx.screenshot
 			UIImpersonator.addChild(square);
 		}
 		
-		[After(async, ui)]
+		[After(ui)]
 		public function tearDown():void
 		{
 			Screenshot.dictionary = null;
@@ -84,34 +84,34 @@ package tests.com.jx.screenshot
 			square = null;
 		}
 		
-		[Test(async, expects="flash.errors.IllegalOperationError")]
+		[Test(expects="flash.errors.IllegalOperationError")]
 		public function missingDictionary():void
 		{
 			Screenshot.dictionary = null;
 			Screenshot.compare("whatever, because dictionary is null...", square);
 		}
 		
-		[Test(async, expects="flash.errors.IllegalOperationError")]
+		[Test(expects="flash.errors.IllegalOperationError")]
 		public function missingSave():void
 		{
 			Screenshot.save = null;
 			Screenshot.compare("whatever, because save is null...", square);
 		}
 		
-		[Test(async)]
+		[Test]
 		public function compareGood():void
 		{
 			Assert.assertTrue(Screenshot.compare("Square", square));
 		}
 		
-		[Test(async)]
+		[Test]
 		public function compareBad():void
 		{
 			square.color = 0x0000ff;
 			Assert.assertFalse(Screenshot.compare("Square", square));
 		}
 		
-		[Test(async)]
+		[Test]
 		public function compareInCreationPhase():void
 		{
 			Screenshot.phase = Screenshot.CREATION;
@@ -121,7 +121,7 @@ package tests.com.jx.screenshot
 			Assert.assertNotNull(save.screenShot);
 		}
 		
-		[Test(async)]
+		[Test]
 		public function saveActual():void
 		{
 			Assert.assertTrue(Screenshot.compare("Square", square));
