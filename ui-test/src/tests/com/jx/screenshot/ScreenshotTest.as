@@ -118,7 +118,7 @@ package tests.com.jx.screenshot
 			Assert.assertTrue(Screenshot.compare("Square", square));
 			Assert.assertEquals(2, save.saveCalledCount);
 			Assert.assertEquals("Square", save.name);
-			Assert.assertNotNull(save.screenShot);
+			Assert.assertNotNull(save.screenshot);
 		}
 		
 		[Test]
@@ -127,7 +127,7 @@ package tests.com.jx.screenshot
 			Assert.assertTrue(Screenshot.compare("Square", square));
 			Assert.assertEquals(1, save.saveCalledCount);
 			Assert.assertEquals("Square-actual", save.name);
-			Assert.assertNotNull(save.screenShot);
+			Assert.assertNotNull(save.screenshot);
 		}
 		
 	}

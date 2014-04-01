@@ -77,7 +77,7 @@ package tests.com.jx.screenshot
 			Assert.assertFalse(comparer.compare("", original, actual));
 			Assert.assertEquals(1, save.saveCalledCount);
 			Assert.assertEquals("-diff", save.name);
-			Assert.assertEquals(0xffffff, save.screenShot.getPixel(0, 0));
+			Assert.assertEquals(0xffffff, save.screenshot.getPixel(0, 0));
 		}
 		
 	}

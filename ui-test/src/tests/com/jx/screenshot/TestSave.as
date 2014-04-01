@@ -22,15 +22,15 @@ package tests.com.jx.screenshot
 		
 		public var saveCalledCount:uint = 0;
 		public var name:String;
-		public var screenShot:BitmapData;
+		public var screenshot:BitmapData;
 		
 		public function TestSave() { }
 		
-		public function save(name:String, screenShot:BitmapData):void
+		public function save(name:String, screenshot:BitmapData):void
 		{
 			saveCalledCount++;
 			this.name = name;
-			this.screenShot = screenShot;
+			this.screenshot = screenshot;
 		}
 		
 	}
