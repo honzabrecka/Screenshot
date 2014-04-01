@@ -78,7 +78,3 @@ The best is the following format `<TestClassName>.<TestMethodName>`
 *-actual.png
 *-diff.png
 ```
-
-### Huge set of components to test
-
-If you have a lot of components to test, then you have a lot and lot of screenshots generated and can be griveous to create a list. I use following bash command `find . -name "*.png" -exec echo "\"{}\"," \; | sort | sed 's/\.png//' | sed 's/\.\///'`, which does heavy work by me.
