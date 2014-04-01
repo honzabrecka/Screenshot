@@ -34,12 +34,6 @@ package tests.com.jx.screenshot
 			queue = new LoadQueue("../fixtures/");
 		}
 		
-		[After]
-		public function tearDown():void
-		{
-			queue = null;
-		}
-		
 		[Test(expects="ArgumentError")]
 		public function emptyQueueArgument():void
 		{
