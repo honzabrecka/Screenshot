@@ -3,6 +3,8 @@ Screenshot
 
 Screenshot is the ActionScript 3 util for integration testing of ui components. It perfectly works with FlexUnit testing flow and Flex Framework ui components.
 
+> Flash has the one special ability - it always looks the same.
+
 Fast, lightweight and easy to use
 ---------------------------------
 
