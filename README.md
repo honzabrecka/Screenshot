@@ -36,8 +36,7 @@ Screenshot.dictionary["SquareTest.defaultColor"] = Bitmap(new SquareWithDefaultC
 or, which is much better and prefered way, use the default `LoadQueue` class, which loads screenshots at runtime and forwards its dictionary to `Screenshot.dictionary`:
 
 ```as3
-// ../data/ is the path, where the screen shots are stored
-var queue:LoadQueue = new LoadQueue("../data/");
+var queue:LoadQueue = new LoadQueue("../fixtures/");
 	queue.addEventListener(Event.COMPLETE, function(event:Event):void
 	{
 		Screenshot.dictionary = queue.dictionary;
