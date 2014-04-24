@@ -15,6 +15,7 @@ package com.jx.screenshot
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
+	import flash.net.sendToURL;
 	import flash.utils.ByteArray;
 	
 	import mx.graphics.codec.PNGEncoder;
@@ -30,23 +31,17 @@ package com.jx.screenshot
 		public static const EXTENSION:String = ".png";
 		
 		private var url:String;
-		private var pool:UploadPool;
 		
 		public function Upload(url:String)
 		{
 			this.url = url;
-			pool = new UploadPool();
 		}
 		
 		public function save(name:String, screenShot:BitmapData):void
 		{
 			var image:ByteArray = convertScreen(screenShot);
 			var request:URLRequest = createRequest(name, image);
-			var loader:URLLoader = pool.getLoader();
-				loader.addEventListener(Event.COMPLETE, loader_eventHandler);
-				loader.addEventListener(IOErrorEvent.IO_ERROR, loader_eventHandler);
-				loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, loader_eventHandler);
-				loader.load(request);
+			sendToURL(request);
 		}
 		
 		private function convertScreen(screen:BitmapData):ByteArray
@@ -63,16 +58,6 @@ package com.jx.screenshot
 				request.data = image;
 			
 			return request;
-		}
-		
-		private function loader_eventHandler(event:Event):void
-		{
-			var loader:URLLoader = URLLoader(event.target);
-				loader.removeEventListener(Event.COMPLETE, loader_eventHandler);
-				loader.removeEventListener(IOErrorEvent.IO_ERROR, loader_eventHandler);
-				loader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, loader_eventHandler);
-			
-			pool.disposeLoader(loader);
 		}
 		
 	}
