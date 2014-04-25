@@ -34,10 +34,10 @@ package com.jx.screenshot
 			var diff:Object = original.compare(actual);
 			
 			if (diff == 0) {
-				// same
+				// bitmaps are the same
 				return true;
 			} else if (diff is BitmapData) {
-				// for manual compare (diff)
+				// for manual comparison (diff)
 				save.save(name + "-diff", BitmapData(diff));
 			}
 			

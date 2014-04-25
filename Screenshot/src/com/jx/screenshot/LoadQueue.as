@@ -30,6 +30,7 @@ package com.jx.screenshot
 		private var fixturesLocation:String;
 		private var queue:Vector.<String>;
 		private var _dictionary:Object;
+		private var _extension:String = "png";
 		private var loader:Loader;
 		private var index:uint;
 		
@@ -45,6 +46,16 @@ package com.jx.screenshot
 			}
 			
 			return _dictionary;
+		}
+		
+		public function get extension():String
+		{
+			return _extension;
+		}
+		
+		public function set extension(value:String):void
+		{
+			_extension = value;
 		}
 		
 		public function load(screenshots:Vector.<String>):void
@@ -111,7 +122,7 @@ package com.jx.screenshot
 		
 		private function loadBitmap():void
 		{
-			var file:String = fixturesLocation + queue[index] + Upload.EXTENSION;
+			var file:String = fixturesLocation + queue[index] + "." + extension;
 			loader.load(new URLRequest(file));
 		}
 		
