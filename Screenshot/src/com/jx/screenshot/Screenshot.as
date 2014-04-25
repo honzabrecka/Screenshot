@@ -42,20 +42,19 @@ package com.jx.screenshot
 			
 			var screenshot:BitmapData = new BitmapData(component.width, component.height);
 				screenshot.draw(component);
-			
-			resizer.resize(screenshot);
+			var resizedScreenshot:BitmapData = resizer.resize(screenshot);
 			
 			// for manual comparison
-			save.save(name + "-actual", screenshot);
+			save.save(name + "-actual", resizedScreenshot);
 			
 			if (phase == CREATION) {
-				save.save(name, screenshot);
+				save.save(name, resizedScreenshot);
 				return true;
 			}
 			
 			var originalScreen:BitmapData = dictionary[name];
 			
-			return comparer.compare(name, originalScreen, screenshot);
+			return comparer.compare(name, originalScreen, resizedScreenshot);
 		}
 		
 		private static function checkPreconditions():void
