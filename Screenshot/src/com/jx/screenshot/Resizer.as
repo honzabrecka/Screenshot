@@ -24,25 +24,15 @@ package com.jx.screenshot
 		 */
 		private static const DEFAULT_MAX_SIZE:uint = 2880;
 		
-		private var _maxSize:uint;
+		private var maxSize:uint;
 		
 		public function Resizer(maxSize:uint = DEFAULT_MAX_SIZE)
 		{
-			this.maxSize = maxSize;
-		}
-		
-		public function get maxSize():uint
-		{
-			return _maxSize;
-		}
-		
-		public function set maxSize(value:uint):void
-		{
-			if (value < 1 || value > DEFAULT_MAX_SIZE) {
+			if (maxSize < 1 || maxSize > DEFAULT_MAX_SIZE) {
 				throw new ArgumentError("MaxSize has to be between 1 and " + DEFAULT_MAX_SIZE + ".");
 			}
 			
-			_maxSize = value;
+			this.maxSize = maxSize;
 		}
 		
 		public function resize(original:BitmapData):BitmapData

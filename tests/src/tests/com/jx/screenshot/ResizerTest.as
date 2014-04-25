@@ -29,8 +29,7 @@ package tests.com.jx.screenshot
 		[Before]
 		public function setUp():void
 		{
-			resizer = new Resizer();
-			resizer.maxSize = 5;
+			resizer = new Resizer(5);
 		}
 		
 		[Test]
@@ -60,13 +59,13 @@ package tests.com.jx.screenshot
 		[Test(expects="ArgumentError")]
 		public function invalidTooSmallMaxSize():void
 		{
-			resizer.maxSize = 0;
+			new Resizer(0);
 		}
 		
 		[Test(expects="ArgumentError")]
 		public function invalidTooBigMaxSize():void
 		{
-			resizer.maxSize = 5000;
+			new Resizer(5000);
 		}
 		
 		private function createAndResize(width:uint, height:uint):BitmapData
