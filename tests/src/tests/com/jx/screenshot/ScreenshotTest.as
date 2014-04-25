@@ -68,7 +68,7 @@ package tests.com.jx.screenshot
 			
 			Screenshot.dictionary = {};
 			Screenshot.dictionary["Square"] = Bitmap(new SquareScreen()).bitmapData;
-			Screenshot.phase = Screenshot.COMPARE;
+			Screenshot.phase = Screenshot.COMPARISON;
 			
 			Async.proceedOnEvent(this, square, Event.ADDED);
 			UIImpersonator.addChild(square);

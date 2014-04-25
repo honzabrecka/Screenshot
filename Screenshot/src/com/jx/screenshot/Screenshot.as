@@ -21,13 +21,13 @@ package com.jx.screenshot
 	{
 		
 		public static const CREATION:uint = 0;
-		public static const COMPARE:uint = 1;
+		public static const COMPARISON:uint = 1;
 		
 		public static var dictionary:Object;
 		public static var save:Save;
 		public static var comparer:Comparer;
 		public static var resizer:Resizer;
-		public static var phase:uint = COMPARE;
+		public static var phase:uint = COMPARISON;
 		
 		public function Screenshot()
 		{

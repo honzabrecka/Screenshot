@@ -53,13 +53,13 @@ Screenshot.save = new Upload("http://localhost/upload.php");
 
 > `Screenshot.save` is also used for uploading an "actual" and a "diff between an actual and and original state". It's useful for debugging.
 
-Finally we have to choose the `Screenshot.phase`. The default one is `Screenshot.COMPARE`. In this phase the component is printed and this print is compared with screenshot previously generated (and stored, and checked by you, and loaded at runtime). The second one is `Screenshot.CREATION`. In this phase the component is printed and this print is saved via `Upload` to server (and stored, and checked, and pushed to repository).
+Finally we have to choose the `Screenshot.phase`. The default one is `Screenshot.COMPARISON`. In this phase the component is printed and this print is compared with screenshot previously generated (and stored, and checked by you, and loaded at runtime). The second one is `Screenshot.CREATION`. In this phase the component is printed and this print is saved via `Upload` to server (and stored, and checked, and pushed to repository).
 
 So (I intentionally use singular):
 
 `Screenshot.CREATION` phase generates screenshot from your tested component and save it to server. You have to check this screenshot and if it looks as you wish, mark it as pattern.
 
-`Screenshot.COMPARE` phase loads screenshot (pattern) and compares actual look of component with it.
+`Screenshot.COMPARISON` phase loads screenshot (pattern) and compares actual look of component with it.
 
 How you can see, it's simple and easy to use.
 
@@ -76,6 +76,14 @@ Best practices
 ### Naming
 
 The best is the following format `<TestClassName>.<TestMethodName>`
+
+### Resizing
+
+If you have to test sizable components (let's say bigger than 100px in any way), you should use `Resizer`, which resizes them to smaller version. It can save a lot of time needed to pixel by pixel comparsion.
+
+```as3
+Screenshot.resizer = new Resizer(100);
+```
 
 ### .gitignore
 
