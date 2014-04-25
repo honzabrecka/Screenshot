@@ -26,6 +26,7 @@ package com.jx.screenshot
 		public static var dictionary:Object;
 		public static var save:Save;
 		public static var comparer:Comparer;
+		public static var resizer:Resizer;
 		public static var phase:uint = COMPARE;
 		
 		public function Screenshot()
@@ -37,21 +38,24 @@ package com.jx.screenshot
 		{
 			checkPreconditions();
 			comparer = comparer || new NativeComparer(save);
+			resizer = resizer || new Resizer();
 			
-			var screen:BitmapData = new BitmapData(component.width, component.height);
-				screen.draw(component);
+			var screenshot:BitmapData = new BitmapData(component.width, component.height);
+				screenshot.draw(component);
 			
-			// for manual compare
-			save.save(name + "-actual", screen);
+			resizer.resize(screenshot);
+			
+			// for manual comparison
+			save.save(name + "-actual", screenshot);
 			
 			if (phase == CREATION) {
-				save.save(name, screen);
+				save.save(name, screenshot);
 				return true;
 			}
 			
 			var originalScreen:BitmapData = dictionary[name];
 			
-			return comparer.compare(name, originalScreen, screen);
+			return comparer.compare(name, originalScreen, screenshot);
 		}
 		
 		private static function checkPreconditions():void
