@@ -38,8 +38,8 @@ package com.jx.screenshot
 		
 		public function set maxSize(value:uint):void
 		{
-			if (value < 1 || value > 2880) {
-				throw new ArgumentError("MaxSize has to be between 1 and 2880.");
+			if (value < 1 || value > DEFAULT_MAX_SIZE) {
+				throw new ArgumentError("MaxSize has to be between 1 and " + DEFAULT_MAX_SIZE + ".");
 			}
 			
 			_maxSize = value;
