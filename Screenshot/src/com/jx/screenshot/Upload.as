@@ -26,11 +26,14 @@ package com.jx.screenshot
 	public class Upload implements Save
 	{
 		
+		public static const PNG_EXTENSION:String = "png";
+		public static const JPEG_EXTENSION:String = "jpg";
+		
 		private var url:String;
 		private var encoder:IImageEncoder;
 		private var extension:String;
 		
-		public function Upload(url:String, extension:String = "png", encoder:IImageEncoder = null)
+		public function Upload(url:String, extension:String = PNG_EXTENSION, encoder:IImageEncoder = null)
 		{
 			this.url = url;
 			this.extension = extension;
@@ -49,9 +52,9 @@ package com.jx.screenshot
 			var encoder:IImageEncoder;
 			
 			switch (extension) {
-				case "png": encoder = new PNGEncoder(); break;
-				case "jpg": encoder = new JPEGEncoder(); break;
-				default: throw new ArgumentError("Invalid extension " + extension + " given. Only png and jpg are supported.");
+				case PNG_EXTENSION: encoder = new PNGEncoder(); break;
+				case JPEG_EXTENSION: encoder = new JPEGEncoder(); break;
+				default: throw new ArgumentError("Invalid extension " + extension + " given. Only " + PNG_EXTENSION + " and " + JPEG_EXTENSION + " are supported.");
 			}
 			
 			return encoder;
@@ -60,10 +63,10 @@ package com.jx.screenshot
 		private function createRequest(name:String, image:ByteArray):URLRequest
 		{
 			var request:URLRequest = new URLRequest(url);
-			request.requestHeaders.push(new URLRequestHeader("Content-type", "application/octet-stream"));
-			request.requestHeaders.push(new URLRequestHeader("X-File-Name", name + "." + extension));
-			request.method = "POST";
-			request.data = image;
+				request.requestHeaders.push(new URLRequestHeader("Content-type", "application/octet-stream"));
+				request.requestHeaders.push(new URLRequestHeader("X-File-Name", name + "." + extension));
+				request.method = "POST";
+				request.data = image;
 			
 			return request;
 		}
