@@ -25,19 +25,20 @@ package com.jx.screenshot
 		public static const CREATION:uint = 0;
 		public static const COMPARISON:uint = 1;
 		
+		public static const INCLUDE_BOUNDS:Boolean = true;
+		
 		public static var dictionary:Object;
 		public static var save:Save;
 		public static var comparer:Comparer;
 		public static var resizer:Resizer;
 		public static var phase:uint = COMPARISON;
-		public static var includeBounds:Boolean = false;
 		
 		public function Screenshot()
 		{
 			throw new IllegalOperationError("Can't be instantiated.");
 		}
 		
-		public static function compare(name:String, component:DisplayObject):Boolean
+		public static function compare(name:String, component:DisplayObject, includeBounds:Boolean = false):Boolean
 		{
 			checkPreconditions();
 			comparer = comparer || new NativeComparer(save);

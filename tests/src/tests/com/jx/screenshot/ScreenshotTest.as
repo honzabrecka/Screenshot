@@ -70,7 +70,6 @@ package tests.com.jx.screenshot
 			Screenshot.dictionary = {};
 			Screenshot.dictionary["Square"] = Bitmap(new SquareScreen()).bitmapData;
 			Screenshot.phase = Screenshot.COMPARISON;
-			Screenshot.includeBounds = false;
 			Screenshot.resizer = null;
 			
 			Async.proceedOnEvent(this, square, Event.ADDED);
@@ -136,9 +135,15 @@ package tests.com.jx.screenshot
 		[Test]
 		public function includeBounds():void
 		{
-			Screenshot.includeBounds = true;
 			redrawSquare(5, -20, 1, 1);
-			Assert.assertTrue(Screenshot.compare("Square", square));
+			Assert.assertTrue(Screenshot.compare("Square", square, Screenshot.INCLUDE_BOUNDS));
+		}
+		
+		[Test]
+		public function doNotIncludeBounds():void
+		{
+			redrawSquare(5, -20, 1, 1);
+			Assert.assertFalse(Screenshot.compare("Square", square));
 		}
 		
 		private function redrawSquare(x:int, y:int, width:uint, height:uint):void
