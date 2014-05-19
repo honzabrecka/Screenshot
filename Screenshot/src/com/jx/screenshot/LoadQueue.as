@@ -30,13 +30,14 @@ package com.jx.screenshot
 		private var fixturesLocation:String;
 		private var queue:Vector.<String>;
 		private var _dictionary:Object;
-		private var _extension:String = "png";
+		private var extension:String;
 		private var loader:Loader;
 		private var index:uint;
 		
-		public function LoadQueue(fixturesLocation:String)
+		public function LoadQueue(fixturesLocation:String, extension:String = "png")
 		{
 			this.fixturesLocation = fixturesLocation;
+			this.extension = extension;
 		}
 		
 		public function get dictionary():Object
@@ -48,26 +49,13 @@ package com.jx.screenshot
 			return _dictionary;
 		}
 		
-		public function get extension():String
-		{
-			return _extension;
-		}
-		
-		public function set extension(value:String):void
-		{
-			_extension = value;
-		}
-		
 		public function load(screenshots:Vector.<String>):void
 		{
 			if (!screenshots) {
 				throw new ArgumentError("Screenshots argument can't be null.");
 			}
 			
-			if (!queue) {
-				queue = new Vector.<String>();
-			}
-			
+			queue = queue || new Vector.<String>();
 			merge(screenshots);
 			
 			if (queue.length == 0) {
