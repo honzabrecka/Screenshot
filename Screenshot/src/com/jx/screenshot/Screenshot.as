@@ -70,7 +70,7 @@ package com.jx.screenshot
 			}
 			
 			var originalScreen:BitmapData = dictionary[name];
-			trace("---", name);
+			
 			return comparer.compare(name, originalScreen, resizedScreenshot);
 		}
 		

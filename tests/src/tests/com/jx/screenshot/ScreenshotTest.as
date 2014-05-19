@@ -141,15 +141,6 @@ package tests.com.jx.screenshot
 			Assert.assertTrue(Screenshot.compare("Square", square));
 		}
 		
-		[Test]
-		public function outOfBoundsWithResizer():void
-		{
-			Screenshot.includeBounds = true;
-			Screenshot.resizer = new Resizer(1);
-			redrawSquare(-20, -20, 100, 100);
-			Assert.assertTrue(Screenshot.compare("OutOfBounds", square));
-		}
-		
 		private function redrawSquare(x:int, y:int, width:uint, height:uint):void
 		{
 			square.graphics.clear();
