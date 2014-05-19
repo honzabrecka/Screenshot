@@ -1,9 +1,9 @@
 /*
- Screenshot util for integration testing of ui components
- Copyright 2013 Jan Břečka. All Rights Reserved.
+Screenshot util for integration testing of ui components
+Copyright 2013 Jan Břečka. All Rights Reserved.
 
- This program is free software. You can redistribute and/or modify it
- in accordance with the terms of the accompanying license agreement.
+This program is free software. You can redistribute and/or modify it
+in accordance with the terms of the accompanying license agreement.
 */
 
 package com.jx.screenshot
@@ -15,6 +15,7 @@ package com.jx.screenshot
 	import flash.utils.ByteArray;
 	
 	import mx.graphics.codec.IImageEncoder;
+	import mx.graphics.codec.JPEGEncoder;
 	import mx.graphics.codec.PNGEncoder;
 	
 	/**
@@ -27,27 +28,13 @@ package com.jx.screenshot
 		
 		private var url:String;
 		private var encoder:IImageEncoder;
-		private var _extension:String = "png";
+		private var extension:String;
 		
-		public function Upload(url:String)
+		public function Upload(url:String, extension:String = "png", encoder:IImageEncoder = null)
 		{
 			this.url = url;
-			encoder = new PNGEncoder();
-		}
-		
-		public function get extension():String
-		{
-			return _extension;
-		}
-		
-		public function set extension(value:String):void
-		{
-			_extension = value;
-		}
-		
-		protected function createEncoder():IImageEncoder
-		{
-			return new PNGEncoder();
+			this.extension = extension;
+			this.encoder = encoder || createEncoderByExtension();
 		}
 		
 		public function save(name:String, screenshot:BitmapData):void
@@ -57,13 +44,26 @@ package com.jx.screenshot
 			sendToURL(request);
 		}
 		
+		private function createEncoderByExtension():IImageEncoder
+		{
+			var encoder:IImageEncoder;
+			
+			switch (extension) {
+				case "png": encoder = new PNGEncoder(); break;
+				case "jpg": encoder = new JPEGEncoder(); break;
+				default: throw new ArgumentError("Invalid extension " + extension + " given. Only png and jpg are supported.");
+			}
+			
+			return encoder;
+		}
+		
 		private function createRequest(name:String, image:ByteArray):URLRequest
 		{
 			var request:URLRequest = new URLRequest(url);
-				request.requestHeaders.push(new URLRequestHeader("Content-type", "application/octet-stream"));
-				request.requestHeaders.push(new URLRequestHeader("X-File-Name", name + "." + extension));
-				request.method = "POST";
-				request.data = image;
+			request.requestHeaders.push(new URLRequestHeader("Content-type", "application/octet-stream"));
+			request.requestHeaders.push(new URLRequestHeader("X-File-Name", name + "." + extension));
+			request.method = "POST";
+			request.data = image;
 			
 			return request;
 		}
