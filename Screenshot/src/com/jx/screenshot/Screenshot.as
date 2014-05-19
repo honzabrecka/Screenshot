@@ -11,6 +11,8 @@ package com.jx.screenshot
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.errors.IllegalOperationError;
+	import flash.geom.Matrix;
+	import flash.geom.Rectangle;
 
 	/**
 	 * @author Jan Břečka
@@ -28,6 +30,7 @@ package com.jx.screenshot
 		public static var comparer:Comparer;
 		public static var resizer:Resizer;
 		public static var phase:uint = COMPARISON;
+		public static var includeBounds:Boolean = false;
 		
 		public function Screenshot()
 		{
@@ -40,8 +43,22 @@ package com.jx.screenshot
 			comparer = comparer || new NativeComparer(save);
 			resizer = resizer || new Resizer();
 			
-			var screenshot:BitmapData = new BitmapData(component.width, component.height);
-				screenshot.draw(component);
+			var matrix:Matrix;
+			var newWidth:uint = component.width;
+			var newHeight:uint = component.height;
+			
+			if (includeBounds) {
+				var bounds:Rectangle = component.getBounds(component);
+				
+				matrix = new Matrix();
+				matrix.translate(-1 * bounds.x, -1 * bounds.y);
+				
+				newWidth = bounds.width;
+				newHeight = bounds.height;
+			}
+			
+			var screenshot:BitmapData = new BitmapData(newWidth, newHeight);
+				screenshot.draw(component, matrix);
 			var resizedScreenshot:BitmapData = resizer.resize(screenshot);
 			
 			// for manual comparison
@@ -53,7 +70,7 @@ package com.jx.screenshot
 			}
 			
 			var originalScreen:BitmapData = dictionary[name];
-			
+			trace("---", name);
 			return comparer.compare(name, originalScreen, resizedScreenshot);
 		}
 		

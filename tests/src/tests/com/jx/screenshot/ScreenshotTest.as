@@ -9,6 +9,7 @@
 package tests.com.jx.screenshot
 {
 	import com.jx.screenshot.Comparer;
+	import com.jx.screenshot.Resizer;
 	import com.jx.screenshot.Save;
 	import com.jx.screenshot.Screenshot;
 	
@@ -69,6 +70,8 @@ package tests.com.jx.screenshot
 			Screenshot.dictionary = {};
 			Screenshot.dictionary["Square"] = Bitmap(new SquareScreen()).bitmapData;
 			Screenshot.phase = Screenshot.COMPARISON;
+			Screenshot.includeBounds = false;
+			Screenshot.resizer = null;
 			
 			Async.proceedOnEvent(this, square, Event.ADDED);
 			UIImpersonator.addChild(square);
@@ -128,6 +131,31 @@ package tests.com.jx.screenshot
 			Assert.assertEquals(1, save.saveCalledCount);
 			Assert.assertEquals("Square-actual", save.name);
 			Assert.assertNotNull(save.screenshot);
+		}
+		
+		[Test]
+		public function includeBounds():void
+		{
+			Screenshot.includeBounds = true;
+			redrawSquare(5, -20, 1, 1);
+			Assert.assertTrue(Screenshot.compare("Square", square));
+		}
+		
+		[Test]
+		public function outOfBoundsWithResizer():void
+		{
+			Screenshot.includeBounds = true;
+			Screenshot.resizer = new Resizer(1);
+			redrawSquare(-20, -20, 100, 100);
+			Assert.assertTrue(Screenshot.compare("OutOfBounds", square));
+		}
+		
+		private function redrawSquare(x:int, y:int, width:uint, height:uint):void
+		{
+			square.graphics.clear();
+			square.graphics.beginFill(0);
+			square.graphics.drawRect(x, y, width, height);
+			square.graphics.endFill();
 		}
 		
 	}
