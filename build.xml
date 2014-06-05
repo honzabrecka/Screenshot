@@ -1,84 +1,94 @@
 <?xml version="1.0"?>
-<project name="Screenshot" default="main">
-    
-    <target name="main"
-        depends="clean, compileScreenshot"/>
+<!--
 
-    <condition value="${jworkspace}"
-        property="WORKSPACE.dir"
-        else="D:/Screenshot">
-        <isset property="jworkspace"/>
-    </condition>
-    <condition value="${jflexsdk}"
+Build swc and test it against unit tests.
+
+@usage $ ant -Dflexsdk <path-to-flex-sdk> -Dflexunit <path-to-flexunit-ant-tasks> -Djflashplayer <path-to-flash-player-debugger>
+@author Jan Břečka
+
+-->
+<project name="Screenshot" default="main" basedir=".">
+    
+    <target name="main" depends="clean, compile, test"/>
+
+    <condition value="${flexsdk}"
         property="FLEX_SDK.dir"
         else="D:/sdks/flex/4.6.0">
-        <isset property="jflexsdk"/>
+        <isset property="flexsdk"/>
     </condition>
-    <condition value="${jflexfpv}"
-        property="FLEX_SDK.fpv"
-        else="11.4">
-        <isset property="jflexfpv"/>
-    </condition>
-    <condition value="${jflexswfv}"
-        property="FLEX_SDK.swfv"
-        else="17">
-        <isset property="jflexswfv"/>
-    </condition>
-    <condition value="${jflexunit}"
+    <condition value="${flexunit}"
         property="FLEXUNIT.dir"
         else="D:/sdks/flexunit">
-        <isset property="jflexunit"/>
+        <isset property="flexunit"/>
     </condition>
-    <condition value="${jflashplayer}"
+    <condition value="${flashplayer}"
         property="FLEX_SDK.fp"
         else="D:/sdks/flex/4.6.0/runtimes/player/11.4/win/FlashPlayerDebugger.exe">
-        <isset property="jflashplayer"/>
-    </condition>
-    <condition value="${jtestsheadless}"
-        property="HEADLESS.enabled"
-        else="false">
-        <isset property="jtestsheadless"/>
-    </condition>
-    <condition value="${jfork}"
-        property="FORK.enabled"
-        else="true">
-        <isset property="jfork"/>
+        <isset property="flashplayer"/>
     </condition>
 
-    <property name="OUTPUT.dir" value="${WORKSPACE.dir}"/>
     <property name="FLEX_HOME" value="${FLEX_SDK.dir}"/>
     <property name="FLEX_SDK.ant" value="${FLEX_SDK.dir}/ant/lib/flexTasks.jar"/>
 
-    <property name="Screenshot.dir" value="${WORKSPACE.dir}/Screenshot"/>
-
-    <property name="DEPLOY.dir" value="${OUTPUT.dir}/DEPLOY"/>
-    <property name="DEPLOY.debug" value="false"/>
-    <property name="DEPLOY.warnings" value="false"/>
+    <property name="screenshot.dir" value="${basedir}/Screenshot"/>
+    <property name="tests.dir" value="${basedir}/tests"/>
+    <property name="DEPLOY.dir" value="${basedir}/DEPLOY"/>
 
     <taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
 
+    <taskdef resource="flexUnitTasks.tasks">
+        <classpath>
+            <fileset dir="${FLEXUNIT.dir}">
+                <include name="flexUnitTasks*.jar"/>
+            </fileset>
+        </classpath>
+    </taskdef>
+
     <target name="clean">
-        <echo>clean</echo>
         <delete dir="${DEPLOY.dir}"/>
         <mkdir dir="${DEPLOY.dir}"/>
     </target>
 
-    <target name="compileScreenshot">
+    <target name="compile">
         <compc output="${DEPLOY.dir}/Screenshot.swc" failonerror="true"
-            debug="${DEPLOY.debug}"
-            warnings="${DEPLOY.warnings}"
+            debug="false"
+            warnings="true"
             optimize="true"
-            target-player="${FLEX_SDK.fpv}"
-            swf-version="${FLEX_SDK.swfv}"
-            dump-config="${DEPLOY.dir}/config_screenshot.xml"
-            size-report="${DEPLOY.dir}/sizereport_screenshot.xml"
-            link-report="${DEPLOY.dir}/linkreport_screenshot.xml"
-            fork="${FORK.enabled}"
-            headless-server="${HEADLESS.enabled}"
             maxmemory="1024m">
-            <source-path path-element="${Screenshot.dir}/src"/>
-            <include-sources dir="${Screenshot.dir}/src" includes="*"/>
+            <source-path path-element="${screenshot.dir}/src"/>
+            <include-sources dir="${screenshot.dir}/src" includes="*"/>
         </compc>
+    </target>
+
+    <target name="test">
+        <mxmlc file="${tests.dir}/src/Main.mxml" failonerror="true"
+            output="${tests.dir}/bin-debug/tests.swf"
+            verbose-stacktraces="true">
+            <library-path dir="${tests.dir}/libs"
+                includes="*"
+                append="true"/>
+            <library-path dir="${FLEX_HOME}"
+                append="true">
+                <include name="frameworks/libs"/>
+            </library-path>
+            <library-path file="${DEPLOY.dir}/Screenshot.swc" append="true"/>
+        </mxmlc>
+
+        <flexunit swf="${tests.dir}/bin-debug/tests.swf"
+            toDir="${DEPLOY.dir}"
+            haltonfailure="false"
+            failureproperty="flexunit.failure"
+            verbose="true"
+            localTrusted="true"
+            display="99"/>
+
+        <junitreport todir="${DEPLOY.dir}">
+            <fileset dir="${DEPLOY.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames"
+                todir="${DEPLOY.dir}/html"/>
+        </junitreport>
     </target>
 
 </project>

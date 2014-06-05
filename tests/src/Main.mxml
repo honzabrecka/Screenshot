@@ -11,6 +11,7 @@
 			
 			import mx.events.FlexEvent;
 			
+			import org.flexunit.listeners.CIListener;
 			import org.flexunit.runner.FlexUnitCore;
 			
 			import tests.com.jx.screenshot.LoadQueueTest;
@@ -37,6 +38,7 @@
 				
 				var core:FlexUnitCore = new FlexUnitCore();
 					core.addListener(runner);
+					core.addListener(new CIListener());
 					core.run(ScreenshotTest, LoadQueueTest, NativeComparerTest, ResizerTest, SquareTest, FlexButtonTest);
 			}
 			
