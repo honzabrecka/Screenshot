@@ -80,6 +80,7 @@ Build swc and test it against unit tests.
             failureproperty="flexunit.failure"
             verbose="true"
             localTrusted="true"
+            command="${flashplayer}"
             display="99"/>
 
         <junitreport todir="${DEPLOY.dir}">
@@ -89,6 +90,8 @@ Build swc and test it against unit tests.
             <report format="frames"
                 todir="${DEPLOY.dir}/html"/>
         </junitreport>
+
+        <fail if="flexunit.failure" message="FlexUnit test(s) failed."/>
     </target>
 
 </project>

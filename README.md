@@ -1,6 +1,8 @@
 Screenshot
 ==========
 
+[![Build Status](https://travis-ci.org/johnikx/Screenshot.svg?branch=master)](https://travis-ci.org/johnikx/Screenshot)
+
 Screenshot is the ActionScript 3 util for integration testing of ui components. It perfectly works with FlexUnit testing flow and Flex Framework ui components.
 
 > Flash has one special ability - output always looks the same.
