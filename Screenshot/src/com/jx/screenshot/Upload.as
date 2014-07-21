@@ -9,9 +9,9 @@ in accordance with the terms of the accompanying license agreement.
 package com.jx.screenshot
 {
 	import flash.display.BitmapData;
+	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
-	import flash.net.sendToURL;
 	import flash.utils.ByteArray;
 	
 	import mx.graphics.codec.IImageEncoder;
@@ -44,7 +44,7 @@ package com.jx.screenshot
 		{
 			var image:ByteArray = encoder.encode(screenshot);
 			var request:URLRequest = createRequest(name, image);
-			sendToURL(request);
+			new URLLoader().load(request);
 		}
 		
 		private function createEncoderByExtension():IImageEncoder
