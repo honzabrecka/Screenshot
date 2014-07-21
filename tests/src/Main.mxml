@@ -34,7 +34,6 @@
 			{
 				Screenshot.save = new Upload("http://localhost/upload/ui-test.php");
 				Screenshot.dictionary = queue.dictionary;
-				//Screenshot.phase = Screenshot.CREATION;
 				
 				var core:FlexUnitCore = new FlexUnitCore();
 					core.addListener(runner);

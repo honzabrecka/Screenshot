@@ -22,16 +22,12 @@ package com.jx.screenshot
 	public class Screenshot
 	{
 		
-		public static const CREATION:uint = 0;
-		public static const COMPARISON:uint = 1;
-		
 		public static const INCLUDE_BOUNDS:Boolean = true;
 		
 		public static var dictionary:Object;
 		public static var save:Save;
 		public static var comparer:Comparer;
 		public static var resizer:Resizer;
-		public static var phase:uint = COMPARISON;
 		
 		public function Screenshot()
 		{
@@ -61,16 +57,10 @@ package com.jx.screenshot
 			var screenshot:BitmapData = new BitmapData(newWidth, newHeight);
 				screenshot.draw(component, matrix);
 			var resizedScreenshot:BitmapData = resizer.resize(screenshot);
+			var originalScreen:BitmapData = dictionary[name];
 			
 			// for manual comparison
 			save.save(name + "-actual", resizedScreenshot);
-			
-			if (phase == CREATION) {
-				save.save(name, resizedScreenshot);
-				return true;
-			}
-			
-			var originalScreen:BitmapData = dictionary[name];
 			
 			return comparer.compare(name, originalScreen, resizedScreenshot);
 		}

@@ -9,7 +9,6 @@
 package tests.com.jx.screenshot
 {
 	import com.jx.screenshot.Comparer;
-	import com.jx.screenshot.Resizer;
 	import com.jx.screenshot.Save;
 	import com.jx.screenshot.Screenshot;
 	
@@ -69,7 +68,6 @@ package tests.com.jx.screenshot
 			
 			Screenshot.dictionary = {};
 			Screenshot.dictionary["Square"] = Bitmap(new SquareScreen()).bitmapData;
-			Screenshot.phase = Screenshot.COMPARISON;
 			Screenshot.resizer = null;
 			
 			Async.proceedOnEvent(this, square, Event.ADDED);
@@ -111,16 +109,6 @@ package tests.com.jx.screenshot
 		{
 			square.color = 0x0000ff;
 			Assert.assertFalse(Screenshot.compare("Square", square));
-		}
-		
-		[Test]
-		public function compareInCreationPhase():void
-		{
-			Screenshot.phase = Screenshot.CREATION;
-			Assert.assertTrue(Screenshot.compare("Square", square));
-			Assert.assertEquals(2, save.saveCalledCount);
-			Assert.assertEquals("Square", save.name);
-			Assert.assertNotNull(save.screenshot);
 		}
 		
 		[Test]
