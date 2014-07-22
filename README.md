@@ -80,6 +80,27 @@ If you have to test sizable components (let's say bigger than 100px in any way),
 Screenshot.resizer = new Resizer(100);
 ```
 
+### Custom assertion
+
+At `com.jx.screenshot` directory create the `assertScreenshot.as` file with the following content:
+
+```as3
+package com.jx.screenshot
+{
+	import org.flexunit.Assert;
+
+	/**
+	 * Asserts that the screenshot of the UI component looks same as on a fixture.
+	 */
+	public function assertScreenshot(fixtureName:String, component:DisplayObject, includeBounds:Boolean=false):void
+	{
+		Assert.assertTrue(Screenshot.compare(fixtureName, component, includeBounds));
+	}
+}
+```
+
+So instead of `assertTrue(Screenshot.compare("SquareTest.defaultColor", component));` you can write just `assertScreenshot("SquareTest.defaultColor", component)`.
+
 ### .gitignore
 
 ```
