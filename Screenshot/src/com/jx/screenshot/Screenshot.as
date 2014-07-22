@@ -34,7 +34,7 @@ package com.jx.screenshot
 			throw new IllegalOperationError("Can't be instantiated.");
 		}
 		
-		public static function compare(name:String, component:DisplayObject, includeBounds:Boolean = false):Boolean
+		public static function compare(fixtureName:String, component:DisplayObject, includeBounds:Boolean = false):Boolean
 		{
 			checkPreconditions();
 			comparer = comparer || new NativeComparer(save);
@@ -57,12 +57,12 @@ package com.jx.screenshot
 			var screenshot:BitmapData = new BitmapData(newWidth, newHeight);
 				screenshot.draw(component, matrix);
 			var resizedScreenshot:BitmapData = resizer.resize(screenshot);
-			var originalScreen:BitmapData = dictionary[name];
+			var originalScreen:BitmapData = dictionary[fixtureName];
 			
 			// for manual comparison
-			save.save(name + "-actual", resizedScreenshot);
+			save.save(fixtureName + "-actual", resizedScreenshot);
 			
-			return comparer.compare(name, originalScreen, resizedScreenshot);
+			return comparer.compare(fixtureName, originalScreen, resizedScreenshot);
 		}
 		
 		private static function checkPreconditions():void
