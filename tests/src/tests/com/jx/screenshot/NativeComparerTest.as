@@ -34,10 +34,10 @@ package tests.com.jx.screenshot
 			comparer = new NativeComparer(save);
 		}
 		
-		[Test]
+		[Test(expects="Error")]
 		public function emptyOriginal():void
 		{
-			Assert.assertFalse(comparer.compare("", null, new BitmapData(1, 1)));
+			comparer.compare("", null, new BitmapData(1, 1));
 		}
 		
 		[Test]

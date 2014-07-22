@@ -27,7 +27,11 @@ package com.jx.screenshot
 		
 		public function compare(name:String, original:BitmapData, actual:BitmapData):Boolean
 		{
-			if (!original || !actual) {
+			if (!original) {
+				throw new Error("Fixture '" + name + "' was not found.");
+			}
+			
+			if (!actual) {
 				return false;
 			}
 			
