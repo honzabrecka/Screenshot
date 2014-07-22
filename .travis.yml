@@ -2,9 +2,22 @@ language: objective-c
 before_script:
   - brew update
   - brew install ant
-  - wget https://dl.dropboxusercontent.com/u/75480155/4.6.0.zip
-  - unzip -q 4.6.0.zip
-  - wget https://dl.dropboxusercontent.com/u/75480155/flexunit-ant-tasks.zip
-  - unzip -q flexunit-ant-tasks.zip
+# flash player debugger
+  - brew install caskroom/cask/brew-cask
+  - brew cask install flash-player-debugger
+# apache flex sdk
+  - wget -O flex_sdk.zip http://mirrors.gigenet.com/apache/flex/4.13.0/binaries/apache-flex-sdk-4.13.0-bin.zip
+  - unzip -q flex_sdk.zip -d flex_sdk
+  - wget -O playerglobal.swc http://download.macromedia.com/get/flashplayer/updaters/14/playerglobal14_0.swc
+  - mkdir -p flex_sdk/frameworks/libs/player/11.1
+  - cp playerglobal.swc flex_sdk/frameworks/libs/player/11.1
+  - echo env.PLAYERGLOBAL_HOME=libs/player > flex_sdk/env.properties
+# apache flex unit
+  - wget -O flexunit.zip http://mirrors.gigenet.com/apache/flex/flexunit/4.2.0/binaries/apache-flex-flexunit-4.2.0-4.12.0-bin.zip
+  - unzip -q flexunit.zip
+  - mkdir -p tests/libs
+  - cp flexunit/flexunit-*-as3_*.swc tests/libs
+  - cp flexunit/flexunit-cilistener-*.swc tests/libs
+  - cp flexunit/flexunit-uilistener-*.swc tests/libs
 script:
-  - ant -Dflexsdk "4.6.0" -Dflexunit "flexunit" -Dflashplayer "4.6.0/runtimes/player/11.4/mac/FlashPlayerDebugger.app/Contents/MacOS/Flash Player Debugger"
+  - ant -Dflexsdk "flex_sdk" -Dflexunit "flexunit" -Dflashplayer "$HOME/Applications/Flash Player Debugger.app/Contents/MacOS/Flash Player Debugger"

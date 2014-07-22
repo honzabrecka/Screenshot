@@ -28,8 +28,6 @@ Build swc and test it against unit tests.
     </condition>
 
     <property name="FLEX_HOME" value="${FLEX_SDK.dir}"/>
-    <property name="FLEX_SDK.ant" value="${FLEX_SDK.dir}/ant/lib/flexTasks.jar"/>
-
     <property name="screenshot.dir" value="${basedir}/Screenshot"/>
     <property name="tests.dir" value="${basedir}/tests"/>
     <property name="DEPLOY.dir" value="${basedir}/DEPLOY"/>
