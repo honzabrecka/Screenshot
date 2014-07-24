@@ -18,7 +18,7 @@ package com.jx.screenshot
 	public interface Comparer
 	{
 		
-		function compare(name:String, original:BitmapData, actual:BitmapData):Boolean;
+		function compare(name:String, expected:BitmapData, actual:BitmapData):Boolean;
 		
 	}
 	

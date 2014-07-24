@@ -25,9 +25,9 @@ package com.jx.screenshot
 			this.save = save;
 		}
 		
-		public function compare(name:String, original:BitmapData, actual:BitmapData):Boolean
+		public function compare(name:String, expected:BitmapData, actual:BitmapData):Boolean
 		{
-			if (!original) {
+			if (!expected) {
 				throw new Error("Fixture '" + name + "' was not found.");
 			}
 			
@@ -35,7 +35,7 @@ package com.jx.screenshot
 				return false;
 			}
 			
-			var diff:Object = original.compare(actual);
+			var diff:Object = expected.compare(actual);
 			
 			if (diff == 0) {
 				// bitmaps are the same
