@@ -20,4 +20,4 @@ before_script:
   - cp flexunit/flexunit-cilistener-*.swc tests/libs
   - cp flexunit/flexunit-uilistener-*.swc tests/libs
 script:
-  - ant -Dflexsdk "flex_sdk" -Dflexunit "flexunit" -Dflashplayer "$HOME/Applications/Flash Player Debugger.app/Contents/MacOS/Flash Player Debugger"
+  - ant -DFLEX_HOME "flex_sdk" -DFLEXUNIT "flexunit" -DFLASHPLAYER "$HOME/Applications/Flash Player Debugger.app/Contents/MacOS/Flash Player Debugger"

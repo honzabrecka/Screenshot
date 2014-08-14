@@ -3,7 +3,7 @@
 
 Build swc and test it against unit tests.
 
-@usage $ ant -Dflexsdk <path-to-flex-sdk> -Dflexunit <path-to-flexunit-ant-tasks> -Djflashplayer <path-to-flash-player-debugger>
+@usage $ ant -DFLEX_HOME <path-to-flex-sdk> -DFLEXUNIT <path-to-flexunit-ant-tasks> -DFLASHPLAYER <path-to-flash-player-debugger>
 @author Jan Břečka
 
 -->
@@ -11,23 +11,9 @@ Build swc and test it against unit tests.
     
     <target name="main" depends="clean, compile, test"/>
 
-    <condition value="${flexsdk}"
-        property="FLEX_SDK.dir"
-        else="D:/sdks/flex/4.6.0">
-        <isset property="flexsdk"/>
-    </condition>
-    <condition value="${flexunit}"
-        property="FLEXUNIT.dir"
-        else="D:/sdks/flexunit">
-        <isset property="flexunit"/>
-    </condition>
-    <condition value="${flashplayer}"
-        property="FLEX_SDK.fp"
-        else="D:/sdks/flex/4.6.0/runtimes/player/11.4/win/FlashPlayerDebugger.exe">
-        <isset property="flashplayer"/>
-    </condition>
-
-    <property name="FLEX_HOME" value="${FLEX_SDK.dir}"/>
+    <property name="FLEX_HOME" value="D:/sdks/flex/4.6.0"/>
+    <property name="FLEXUNIT" value="D:/sdks/flexunit"/>
+    <property name="FLASHPLAYER" value="D:/sdks/flex/4.6.0/runtimes/player/11.4/win/FlashPlayerDebugger.exe"/>
     <property name="screenshot.dir" value="${basedir}/Screenshot"/>
     <property name="tests.dir" value="${basedir}/tests"/>
     <property name="DEPLOY.dir" value="${basedir}/DEPLOY"/>
@@ -36,7 +22,7 @@ Build swc and test it against unit tests.
 
     <taskdef resource="flexUnitTasks.tasks">
         <classpath>
-            <fileset dir="${FLEXUNIT.dir}">
+            <fileset dir="${FLEXUNIT}">
                 <include name="flexUnitTasks*.jar"/>
             </fileset>
         </classpath>
@@ -78,7 +64,7 @@ Build swc and test it against unit tests.
             failureproperty="flexunit.failure"
             verbose="true"
             localTrusted="true"
-            command="${flashplayer}"
+            command="${FLASHPLAYER}"
             display="99"/>
 
         <junitreport todir="${DEPLOY.dir}">
