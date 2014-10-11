@@ -3,7 +3,7 @@ Screenshot
 
 [![Build Status](https://travis-ci.org/johnikx/Screenshot.svg?branch=master)](https://travis-ci.org/johnikx/Screenshot)
 
-Screenshot is the ActionScript 3 util for integration testing of UI components. It perfectly works with FlexUnit testing flow and Flex Framework UI components.
+Screenshot is an ActionScript 3 util for integration testing of UI components. It perfectly works with FlexUnit testing flow and Flex Framework UI components.
 
 > Flash has one special ability - output always looks the same.
 
@@ -26,7 +26,7 @@ public function defaultColor():void
 Setup
 -----
 
-At first of all you have to set the `ScreenShot.dictionary` property, which is a simple key value storage. It includes fixtures, expected states of your UI components. You can fill it manually:
+At first of all you have to set the `ScreenShot.dictionary` property, which is a simple key value storage. It includes fixtures (expected states of your UI components). You can fill it manually:
 
 ```as3
 [Embed(source="SquareTest.defaultColor.png")]
@@ -36,7 +36,7 @@ Screenshot.dictionary = {};
 Screenshot.dictionary["SquareTest.defaultColor"] = Bitmap(new SquareWithDefaultColor()).bitmapData;
 ```
 
-or, which is much better and prefered way, use the `LoadQueue`, which loads fixtures at runtime:
+or, which is much better and prefered way, use the `LoadQueue` class and load fixtures at runtime:
 
 ```as3
 var queue:LoadQueue = new LoadQueue("../fixtures/");
@@ -48,13 +48,15 @@ var queue:LoadQueue = new LoadQueue("../fixtures/");
 	queue.load(new <String>["SquareTest.defaultColor"]);
 ```
 
-Then you have to set the `Screenshot.save` property to new instance of the `Upload` class, which uploads the screenshot of an actual state of your UI component to the server:
+Then you have to set the `Screenshot.save` property to a new instance of the `Upload` class to be able to upload a screenshot of an actual state of your UI component to the server:
 
 ```as3
-Screenshot.save = new Upload("http://localhost/upload.php");
+Screenshot.save = new Upload("http://127.0.0.1:9000/upload.php");
 ```
 
-Now if you run your test case, it should fail, but the `SquareTest.defaultColor-actual.png` file should appear in your fixtures directory. If it looks as expected, you can mark it as a valid fixture. Just rename it - remove the `-actual` suffix from its name.
+> Server can be started by `$ php -S 127.0.0.1:9000`
+
+Now if you run your test case it should fail, but the `SquareTest.defaultColor-actual.png` file should appear in your fixtures directory. If it looks as you expected, you can mark it as a valid fixture by removing the `-actual` suffix from its name.
 
 You've covered your ass, now!
 
@@ -74,7 +76,7 @@ The best is the following format `<TestClassName>.<TestMethodName>`
 
 ### Resizing
 
-If you have to test sizable components (let's say bigger than 100px in any way), you should use `Resizer`, which resizes them to smaller version. It can save a lot of time needed to pixel by pixel comparsion:
+If you have to test sizable components (let's say bigger than 100px in any way), you should use `Resizer`, which resizes them to smaller version. It can save a lot of time needed by pixel by pixel comparison:
 
 ```as3
 Screenshot.resizer = new Resizer(100);
@@ -99,7 +101,7 @@ package com.jx.screenshot
 }
 ```
 
-So instead of `assertTrue(Screenshot.compare("SquareTest.defaultColor", component));` you can write just `assertScreenshot("SquareTest.defaultColor", component)`.
+So instead of `assertTrue(Screenshot.compare("SquareTest.defaultColor", component));` you'll write just `assertScreenshot("SquareTest.defaultColor", component)`.
 
 ### .gitignore
 
