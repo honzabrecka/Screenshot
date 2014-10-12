@@ -1,7 +1,5 @@
-Screenshot
+Screenshot [![Build Status](https://travis-ci.org/honzabrecka/Screenshot.svg?branch=master)](https://travis-ci.org/honzabrecka/Screenshot)
 ==========
-
-[![Build Status](https://travis-ci.org/johnikx/Screenshot.svg?branch=master)](https://travis-ci.org/johnikx/Screenshot)
 
 Screenshot is an ActionScript 3 util for integration testing of UI components. It perfectly works with FlexUnit testing flow and Flex Framework UI components.
 
