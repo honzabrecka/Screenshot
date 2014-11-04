@@ -63,6 +63,8 @@ You've covered your ass, now!
 Known issues
 ------------
 
+Pure ActionScript projects may throw "VerifyError: Error #1014: Class mx.graphics.codec::IImageEncoder could not be found." error when you run your test suite. To solve this, just link the `flex_sdk_location/frameworks/libs/framework.swc`.
+
 Sometimes you can see "Adobe Flash Player has stopped a potentially unsafe operation." error message when you run your test suite. To solve this, just add the swf file location to the trusted list in Adobe FlashPlayer Settings Manager in order to allow a local swf connect the internet.
 
 Best practices
