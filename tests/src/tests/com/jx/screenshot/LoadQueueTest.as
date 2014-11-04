@@ -8,14 +8,15 @@
 
 package tests.com.jx.screenshot
 {
+	import com.jx.screenshot.LoadQueue;
+	
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	
 	import flexunit.framework.Assert;
 	
-	import com.jx.screenshot.LoadQueue;
-	
 	import org.flexunit.async.Async;
+	
 	import tests.TestCase;
 
 	/**
@@ -76,7 +77,10 @@ package tests.com.jx.screenshot
 		[Test(async)]
 		public function completeEventWhenEmptyQueueGiven():void
 		{
-			Async.handleEvent(this, queue, Event.COMPLETE, null);
+			Async.handleEvent(this, queue, Event.COMPLETE, function(event:Event, data:Object):void
+			{
+				Assert.assertNotNull(queue.dictionary);
+			});
 			queue.load(new <String>[]);
 		}
 		

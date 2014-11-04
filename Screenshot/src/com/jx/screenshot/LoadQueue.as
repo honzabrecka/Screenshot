@@ -57,6 +57,7 @@ package com.jx.screenshot
 			
 			queue = queue || new Vector.<String>();
 			merge(screenshots);
+			_dictionary = {};
 			
 			if (queue.length == 0) {
 				done();
@@ -78,7 +79,6 @@ package com.jx.screenshot
 		
 		private function start():void
 		{
-			_dictionary = {};
 			index = 0;
 			createLoader();
 			loadBitmap();
