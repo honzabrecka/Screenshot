@@ -85,6 +85,12 @@ package tests.com.jx.screenshot
 		}
 		
 		[Test(expects="flash.errors.IllegalOperationError")]
+		public function cannotBeInstantiated():void
+		{
+			new Screenshot();
+		}
+		
+		[Test(expects="flash.errors.IllegalOperationError")]
 		public function missingDictionary():void
 		{
 			Screenshot.dictionary = null;

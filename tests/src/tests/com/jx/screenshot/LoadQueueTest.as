@@ -84,5 +84,15 @@ package tests.com.jx.screenshot
 			queue.load(new <String>[]);
 		}
 		
+		[Test(async)]
+		public function loadBadFixture():void
+		{
+			Async.handleEvent(this, queue, Event.COMPLETE, function(event:Event, data:Object):void
+			{
+				Assert.assertNull(queue.dictionary["bad"]);
+			});
+			queue.load(new <String>["bad"]);
+		}
+		
 	}
 }
