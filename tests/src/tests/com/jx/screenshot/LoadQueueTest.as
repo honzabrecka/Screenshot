@@ -44,15 +44,13 @@ package tests.com.jx.screenshot
 		[Test(async)]
 		public function multipleLoads():void
 		{
-			Async.handleEvent(this, queue, Event.COMPLETE, multipleLoads_asyncHandler);
+			Async.handleEvent(this, queue, Event.COMPLETE, function(event:Event, data:Object):void
+			{
+				Assert.assertTrue(queue.dictionary["a"]);
+				Assert.assertTrue(queue.dictionary["b"]);
+			});
 			queue.load(new <String>["a"]);
 			queue.load(new <String>["a", "b"]);
-		}
-		
-		private function multipleLoads_asyncHandler(event:Event, data:Object):void
-		{
-			Assert.assertTrue(queue.dictionary["a"]);
-			Assert.assertTrue(queue.dictionary["b"]);
 		}
 		
 		[Test(expects="flash.errors.IllegalOperationError")]
@@ -64,14 +62,12 @@ package tests.com.jx.screenshot
 		[Test(async)]
 		public function completeEvent():void
 		{
-			Async.handleEvent(this, queue, Event.COMPLETE, completeEvent_asyncHandler);
+			Async.handleEvent(this, queue, Event.COMPLETE, function(event:Event, data:Object):void
+			{
+				Assert.assertTrue(queue.dictionary["a"] is BitmapData);
+				Assert.assertNull(queue.dictionary["undefinedScreen"]);
+			});
 			queue.load(new <String>["a", "b"]);
-		}
-		
-		private function completeEvent_asyncHandler(event:Event, data:Object):void
-		{
-			Assert.assertTrue(queue.dictionary["a"] is BitmapData);
-			Assert.assertNull(queue.dictionary["undefinedScreen"]);
 		}
 		
 		[Test(async)]
