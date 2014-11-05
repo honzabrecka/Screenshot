@@ -9,6 +9,9 @@ in accordance with the terms of the accompanying license agreement.
 package com.jx.screenshot
 {
 	import flash.display.BitmapData;
+	import flash.events.Event;
+	import flash.events.IOErrorEvent;
+	import flash.events.SecurityErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
@@ -42,9 +45,32 @@ package com.jx.screenshot
 		
 		public function save(name:String, screenshot:BitmapData):void
 		{
+			function onComplete(event:Event):void
+			{
+				destroy(event.target);
+			}
+			
+			function onError(event:Event):void
+			{
+				trace("Unable to upload to", url, ". Please, make sure your server is running.");
+				destroy(event.target);
+			}
+			
+			function destroy(loader:URLLoader):void
+			{
+				loader.removeEventListener(Event.COMPLETE, onComplete);
+				loader.removeEventListener(IOErrorEvent.IO_ERROR, onError);
+				loader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, onError);
+				loader = null;
+			}
+			
 			var image:ByteArray = encoder.encode(screenshot);
 			var request:URLRequest = createRequest(name, image);
-			new URLLoader().load(request);
+			var loader:URLLoader = new URLLoader();
+				loader.addEventListener(Event.COMPLETE, onComplete);
+				loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
+				loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onError);
+				loader.load(request);
 		}
 		
 		private function createEncoderByExtension():IImageEncoder
