@@ -89,6 +89,7 @@ At `com.jx.screenshot` directory create the `assertScreenshot.as` file with the 
 ```as3
 package com.jx.screenshot
 {
+	import flash.display.DisplayObject;
 	import org.flexunit.Assert;
 
 	/**
