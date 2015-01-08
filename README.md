@@ -92,9 +92,6 @@ package com.jx.screenshot
 	import flash.display.DisplayObject;
 	import org.flexunit.Assert;
 
-	/**
-	 * Asserts that the screenshot of the UI component looks same as on a fixture.
-	 */
 	public function assertScreenshot(fixtureName:String, component:DisplayObject, includeBounds:Boolean=false):void
 	{
 		Assert.assertTrue(Screenshot.compare(fixtureName, component, includeBounds));
