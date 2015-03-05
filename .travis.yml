@@ -6,7 +6,7 @@ before_script:
   - brew install caskroom/cask/brew-cask
   - brew cask install flash-player-debugger
 # apache flex sdk
-  - wget -O flex_sdk.zip http://mirrors.gigenet.com/apache/flex/4.13.0/binaries/apache-flex-sdk-4.13.0-bin.zip
+  - wget -O flex_sdk.zip http://www.apache.org/dist/flex/4.14.0/binaries/apache-flex-sdk-4.14.0-bin.zip
   - unzip -q flex_sdk.zip -d flex_sdk
   - wget -O playerglobal.swc http://download.macromedia.com/get/flashplayer/updaters/14/playerglobal14_0.swc
   - mkdir -p flex_sdk/frameworks/libs/player/11.1
