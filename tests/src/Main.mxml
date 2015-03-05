@@ -18,6 +18,7 @@
 			import tests.com.jx.screenshot.NativeComparatorTest;
 			import tests.com.jx.screenshot.ResizerTest;
 			import tests.com.jx.screenshot.ScreenshotTest;
+			import tests.com.jx.screenshot.ThresholdComparatorTest;
 			import tests.com.jx.screenshot.UploadTest;
 			import tests.jx.FlexButtonTest;
 			import tests.jx.SquareTest;
@@ -39,7 +40,16 @@
 				var core:FlexUnitCore = new FlexUnitCore();
 					core.addListener(runner);
 					core.addListener(new CIListener());
-					core.run(ScreenshotTest, LoadQueueTest, NativeComparatorTest, ResizerTest, UploadTest, SquareTest, FlexButtonTest);
+					core.run(
+						ScreenshotTest,
+						LoadQueueTest,
+						NativeComparatorTest,
+						ThresholdComparatorTest,
+						ResizerTest,
+						UploadTest,
+						SquareTest,
+						FlexButtonTest
+					);
 			}
 			
 		]]>
