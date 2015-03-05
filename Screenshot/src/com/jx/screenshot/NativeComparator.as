@@ -15,12 +15,12 @@ package com.jx.screenshot
 	 * @langversion 3.0
 	 */
 	
-	public class NativeComparer implements Comparer
+	public class NativeComparator implements Comparator
 	{
 		
 		private var save:Save;
 		
-		public function NativeComparer(save:Save)
+		public function NativeComparator(save:Save)
 		{
 			this.save = save;
 		}
@@ -41,6 +41,8 @@ package com.jx.screenshot
 				// bitmaps are the same
 				return true;
 			} else if (diff is BitmapData) {
+				
+				
 				// for manual comparison (diff)
 				save.save(name + "-diff", BitmapData(diff));
 			}

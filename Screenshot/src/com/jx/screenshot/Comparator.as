@@ -15,7 +15,7 @@ package com.jx.screenshot
 	 * @langversion 3.0
 	 */
 	
-	public interface Comparer
+	public interface Comparator
 	{
 		
 		function compare(name:String, expected:BitmapData, actual:BitmapData):Boolean;

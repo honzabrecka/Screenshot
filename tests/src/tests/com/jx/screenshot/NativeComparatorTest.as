@@ -8,7 +8,7 @@
 
 package tests.com.jx.screenshot
 {
-	import com.jx.screenshot.NativeComparer;
+	import com.jx.screenshot.NativeComparator;
 	
 	import flash.display.BitmapData;
 	
@@ -21,36 +21,36 @@ package tests.com.jx.screenshot
 	 * @langversion 3.0
 	 */
 	
-	public class NativeComparerTest extends TestCase
+	public class NativeComparatorTest extends TestCase
 	{
 		
-		private var comparer:NativeComparer;
+		private var comparator:NativeComparator;
 		private var save:TestSave;
 		
 		[Before]
 		public function setUp():void
 		{
 			save = new TestSave();
-			comparer = new NativeComparer(save);
+			comparator = new NativeComparator(save);
 		}
 		
 		[Test(expects="Error")]
 		public function emptyOriginal():void
 		{
-			comparer.compare("", null, new BitmapData(1, 1));
+			comparator.compare("", null, new BitmapData(1, 1));
 		}
 		
 		[Test]
 		public function emptyActual():void
 		{
-			Assert.assertFalse(comparer.compare("", new BitmapData(1, 1), null));
+			Assert.assertFalse(comparator.compare("", new BitmapData(1, 1), null));
 		}
 		
 		[Test]
 		public function same():void
 		{
 			var data:BitmapData = new BitmapData(1, 1);
-			Assert.assertTrue(comparer.compare("", data, data));
+			Assert.assertTrue(comparator.compare("", data, data));
 		}
 		
 		[Test]
@@ -58,7 +58,7 @@ package tests.com.jx.screenshot
 		{
 			var original:BitmapData = new BitmapData(1, 1);
 			var actual:BitmapData = new BitmapData(2, 1);
-			Assert.assertFalse(comparer.compare("", original, actual));
+			Assert.assertFalse(comparator.compare("", original, actual));
 		}
 		
 		[Test]
@@ -66,7 +66,7 @@ package tests.com.jx.screenshot
 		{
 			var original:BitmapData = new BitmapData(1, 1);
 			var actual:BitmapData = new BitmapData(1, 2);
-			Assert.assertFalse(comparer.compare("", original, actual));
+			Assert.assertFalse(comparator.compare("", original, actual));
 		}
 		
 		[Test]
@@ -74,7 +74,7 @@ package tests.com.jx.screenshot
 		{
 			var original:BitmapData = new BitmapData(1, 1);
 			var actual:BitmapData = new BitmapData(1, 1, true, 0xff0000);
-			Assert.assertFalse(comparer.compare("", original, actual));
+			Assert.assertFalse(comparator.compare("", original, actual));
 			Assert.assertEquals(1, save.saveCalledCount);
 			Assert.assertEquals("-diff", save.name);
 			Assert.assertEquals(0xffffff, save.screenshot.getPixel(0, 0));

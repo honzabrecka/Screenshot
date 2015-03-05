@@ -26,7 +26,7 @@ package com.jx.screenshot
 		
 		public static var dictionary:Object;
 		public static var save:Save;
-		public static var comparer:Comparer;
+		public static var comparator:Comparator;
 		public static var resizer:Resizer;
 		
 		public function Screenshot()
@@ -37,7 +37,7 @@ package com.jx.screenshot
 		public static function compare(fixtureName:String, component:DisplayObject, includeBounds:Boolean = false):Boolean
 		{
 			checkPreconditions();
-			comparer = comparer || new NativeComparer(save);
+			comparator = comparator || new NativeComparator(save);
 			resizer = resizer || new Resizer();
 			
 			var matrix:Matrix;
@@ -62,7 +62,7 @@ package com.jx.screenshot
 			// for manual comparison
 			save.save(fixtureName + "-actual", resizedScreenshot);
 			
-			return comparer.compare(fixtureName, originalScreen, resizedScreenshot);
+			return comparator.compare(fixtureName, originalScreen, resizedScreenshot);
 		}
 		
 		private static function checkPreconditions():void
