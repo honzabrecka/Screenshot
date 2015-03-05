@@ -49,10 +49,10 @@ var queue:LoadQueue = new LoadQueue("../fixtures/");
 Then you have to set the `Screenshot.save` property to a new instance of the `Upload` class to be able to upload a screenshot of an actual state of your UI component to the server:
 
 ```as3
-Screenshot.save = new Upload("http://127.0.0.1:9000/upload.php");
+Screenshot.save = new Upload("http://127.0.0.1:4000/upload.php");
 ```
 
-> Server can be started by `$ php -S 127.0.0.1:9000`
+> Server can be started by `$ php -S 127.0.0.1:4000`
 
 Now if you run your test case it should fail, but the `SquareTest.defaultColor-actual.png` file should appear in your fixtures directory. If it looks as you expected, you can mark it as a valid fixture by removing the `-actual` suffix from its name.
 

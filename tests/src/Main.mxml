@@ -34,7 +34,7 @@
 			
 			private function screenLoader_completeHandler(event:Event):void
 			{
-				Screenshot.save = new Upload("http://localhost/upload/ui-test.php");
+				Screenshot.save = new Upload("http://127.0.0.1:4000/upload.php");
 				Screenshot.dictionary = queue.dictionary;
 				
 				var core:FlexUnitCore = new FlexUnitCore();
