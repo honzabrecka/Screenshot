@@ -58,7 +58,7 @@ package com.jx.screenshot
 				var matrix:Matrix = new Matrix();
 					matrix.scale(scale, scale);
 				var resized:BitmapData = new BitmapData(newWidth, newHeight);
-					resized.draw(original, matrix, null, null, null, true);
+					resized.draw(original, matrix);
 				
 				return resized;
 			}
