@@ -8,16 +8,17 @@
 
 package tests.com.jx.screenshot
 {
-	import flash.display.BitmapData;
-	
 	import com.jx.screenshot.Save;
+	
+	import flash.display.BitmapData;
+	import flash.events.EventDispatcher;
 	
 	/**
 	 * @author Jan Břečka
 	 * @langversion 3.0
 	 */
 	
-	public class TestSave implements Save
+	public class TestSave extends EventDispatcher implements Save
 	{
 		
 		public var saveCalledCount:uint = 0;
@@ -31,6 +32,11 @@ package tests.com.jx.screenshot
 			saveCalledCount++;
 			this.name = name;
 			this.screenshot = screenshot;
+		}
+		
+		public function get pending():uint
+		{
+			return 0;
 		}
 		
 	}

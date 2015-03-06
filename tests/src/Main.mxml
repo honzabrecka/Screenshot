@@ -11,9 +11,9 @@
 			
 			import mx.events.FlexEvent;
 			
-			import org.flexunit.listeners.CIListener;
 			import org.flexunit.runner.FlexUnitCore;
 			
+			import tests.CIListener;
 			import tests.com.jx.screenshot.LoadQueueTest;
 			import tests.com.jx.screenshot.NativeComparatorTest;
 			import tests.com.jx.screenshot.ResizerTest;
@@ -39,7 +39,7 @@
 				
 				var core:FlexUnitCore = new FlexUnitCore();
 					core.addListener(runner);
-					core.addListener(new CIListener());
+					core.addListener(new CIListener(Screenshot.save));
 					core.run(
 						ScreenshotTest,
 						LoadQueueTest,

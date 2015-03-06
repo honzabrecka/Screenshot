@@ -2,6 +2,8 @@ language: objective-c
 before_script:
   - brew update
   - brew install ant
+  - brew tap homebrew/homebrew-php
+  - brew install php56
 # flash player debugger
   - brew install caskroom/cask/brew-cask
   - brew cask install flash-player-debugger
@@ -19,5 +21,8 @@ before_script:
   - cp flexunit/flexunit-*-as3_*.swc tests/libs
   - cp flexunit/flexunit-cilistener-*.swc tests/libs
   - cp flexunit/flexunit-uilistener-*.swc tests/libs
+# php
+  - php -d always_populate_raw_post_data="-1" -S 127.0.0.1:4000 &
 script:
   - ant -DFLEX_HOME "flex_sdk" -DFLEXUNIT "flexunit" -DFLASHPLAYER "$HOME/Applications/Flash Player Debugger.app/Contents/MacOS/Flash Player Debugger"
+  - test -f tests/fixtures/FlexButtonTest.labelAndSize-actual.png

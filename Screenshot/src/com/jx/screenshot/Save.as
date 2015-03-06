@@ -9,16 +9,19 @@
 package com.jx.screenshot
 {
 	import flash.display.BitmapData;
+	import flash.events.IEventDispatcher;
 	
 	/**
 	 * @author Jan Břečka
 	 * @langversion 3.0
 	 */
 	
-	public interface Save
+	public interface Save extends IEventDispatcher
 	{
 		
 		function save(name:String, screenShot:BitmapData):void;
+		
+		function get pending():uint;
 		
 	}
 }

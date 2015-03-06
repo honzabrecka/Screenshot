@@ -1,15 +1,16 @@
 /*
-Screenshot util for integration testing of ui components
-Copyright 2013 Jan Břečka. All Rights Reserved.
+ Screenshot util for integration testing of ui components
+ Copyright 2013 Jan Břečka. All Rights Reserved.
 
-This program is free software. You can redistribute and/or modify it
-in accordance with the terms of the accompanying license agreement.
+ This program is free software. You can redistribute and/or modify it
+ in accordance with the terms of the accompanying license agreement.
 */
 
 package com.jx.screenshot
 {
 	import flash.display.BitmapData;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.net.URLLoader;
@@ -22,11 +23,17 @@ package com.jx.screenshot
 	import mx.graphics.codec.PNGEncoder;
 	
 	/**
+	 * Everytime it's complete - can be dispatched multiple times.
+	 */
+	
+	[Event(name="complete", type="flash.events.Event")]
+	
+	/**
 	 * @author Jan Břečka
 	 * @langversion 3.0
 	 */
 	
-	public class Upload implements Save
+	public class Upload extends EventDispatcher implements Save
 	{
 		
 		public static const PNG_EXTENSION:String = "png";
@@ -35,6 +42,7 @@ package com.jx.screenshot
 		private var url:String;
 		private var encoder:IImageEncoder;
 		private var extension:String;
+		private var activeLoaders:uint = 0;
 		
 		public function Upload(url:String, extension:String = PNG_EXTENSION, encoder:IImageEncoder = null)
 		{
@@ -62,6 +70,10 @@ package com.jx.screenshot
 				loader.removeEventListener(IOErrorEvent.IO_ERROR, onError);
 				loader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, onError);
 				loader = null;
+				
+				if (--activeLoaders == 0) {
+					dispatchEvent(new Event(Event.COMPLETE));
+				}
 			}
 			
 			var image:ByteArray = encoder.encode(screenshot);
@@ -70,7 +82,13 @@ package com.jx.screenshot
 				loader.addEventListener(Event.COMPLETE, onComplete);
 				loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
 				loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onError);
+				activeLoaders++;
 				loader.load(request);
+		}
+		
+		public function get pending():uint
+		{
+			return activeLoaders;
 		}
 		
 		private function createEncoderByExtension():IImageEncoder
